@@ -41,6 +41,7 @@ public class UserAction implements SessionAware {
     private Reservations reservation = null;
     private int restaurantId;
     private int customerId;
+    private String customerName;
     private int bookedTable;
     private int orderId;
     private String bookingDate;
@@ -82,9 +83,13 @@ public class UserAction implements SessionAware {
             System.out.println("Role=" + validUser.isUserRole()) ;
             if (validUser.isValidUser()) {
                 if (validUser.isUserRole()) {
+                    reservationServices = new ReservationServices();
                     setUserName(validUser.getUserName());
                     setPassword(validUser.getPassword());
                     setFirstName(validUser.getFirstName());
+                    setReservationList(new ArrayList<Reservations>());
+                    setReservationList(reservationServices.showAllReservations());
+                    System.out.println("91: "+reservationList);
                     login = "ADMINLOGIN";
                     System.out.println("ADMINLOGIN");
 
@@ -113,7 +118,7 @@ public class UserAction implements SessionAware {
         log.info("This is log4j");
         return login;
     }
-
+    
     public String userProfile() throws Exception {
         HttpSession session = ServletActionContext.getRequest().getSession(false);
         User user = (User) session.getAttribute("User");

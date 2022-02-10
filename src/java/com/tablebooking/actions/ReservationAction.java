@@ -9,6 +9,7 @@ import com.tablebooking.beans.Menu;
 import com.tablebooking.beans.Reservations;
 import com.tablebooking.beans.Restaurant;
 import com.tablebooking.beans.User;
+import com.tablebooking.dao.MenuServices;
 import com.tablebooking.dao.ReservationServices;
 import com.tablebooking.dao.RestaurantServices;
 import java.io.IOException;
@@ -17,6 +18,8 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.http.HttpSession;
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.dispatcher.SessionMap;
@@ -27,6 +30,7 @@ import org.apache.struts2.interceptor.SessionAware;
  * @author amankumar
  */
 public class ReservationAction implements SessionAware {
+
     private int restaurantId;
     private int productId;
     private int quantity;
@@ -58,16 +62,16 @@ public class ReservationAction implements SessionAware {
     private ArrayList cart = null;
     private String name, password;
     private SessionMap<String, Object> sessionMap;
-    private int ctr=0;
+    private int ctr = 0;
     private String msg;
     
-       public String showAllReservation() throws Exception {
-           System.out.println("showAllReservation invoked");
+    public String showAllReservation() throws Exception {
+        System.out.println("showAllReservation invoked");
         setReservationServices(new ReservationServices());
         try {
             setReservationList(new ArrayList<Reservations>());
             setReservationList(getReservationServices().showAllReservations());
-
+            
             if (!reservationList.isEmpty()) {
                 setNoData(false);
                 System.out.println("Reservationt retrieve = " + getReservationList().size());
@@ -80,48 +84,51 @@ public class ReservationAction implements SessionAware {
         }
         return "RESERVATIONS";
     }
-       public String addProductToCart() throws IOException{
-           System.out.println("Cart: "+productId);
-        HttpSession session = ServletActionContext.getRequest().getSession(false);
-        if (session.getAttribute("Cart") == null) {
-            ArrayList productInCart = new ArrayList();
-            Menu product = new Menu();
-            product.setProductId(productId);
-            product.setFoodItems(foodItems);
-            product.setPrice(price);
-            productInCart.add(product);
-            setCart(productInCart);
-           getSessionMap().put("Cart", cart);
+
+    public String addProductToCart() throws IOException {
+        System.out.println("Cart: " + productId);
+        MenuServices item = new MenuServices();
+        if (sessionMap.get("Cart") == null) {
+            ArrayList productInCart = new ArrayList<Menu>();
+            
+            
+            try {
+                Menu product = item.fetchProduct(productId);
+                productInCart.add(product);
+                getSessionMap().put("Cart", productInCart);
+            } catch (Exception ex) {
+                Logger.getLogger(ReservationAction.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+            
+        } else {
+            ArrayList cart = (ArrayList) sessionMap.get("Cart");
+            try {
+                Menu product = item.fetchProduct(productId);
+                cart.add(product);
+                getSessionMap().put("Cart", cart);
+            } catch (Exception ex) {
+                Logger.getLogger(ReservationAction.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
-        else {
-            ArrayList cart =(ArrayList) session.getAttribute("Cart");
-            Menu product = new Menu();
-            product.setProductId(productId);
-            product.setFoodItems(foodItems);
-            product.setPrice(price);
-            cart.add(product);
-            setCartSize(cart.size());
-           getSessionMap().put("Cart", cart);
-        }
-        
+        ArrayList cart = (ArrayList) sessionMap.get("Cart");
         PrintWriter out = ServletActionContext.getResponse().getWriter();
         out.println(cart.size());
-        System.out.println("Items in cart="+cart.size());
-           return "cart";
-       }
-       
+        System.out.println("Items in cart=" + cart.size());
+        System.out.println("Cart:111 " +sessionMap.get("Cart") );
+        return "cart";
+    }
+
        public String viewCart() throws Exception {
-           
-        HttpSession session = ServletActionContext.getRequest().getSession(false);
-        setCart(new ArrayList<Menu>());
-        setCart((ArrayList) session.getAttribute("Cart"));
+        setCart(new ArrayList<Menu>());  
+        setCart((ArrayList) sessionMap.get("Cart"));
+//        ArrayList cart =(ArrayList) sessionMap.get("Cart");
            return "CART"; 
        }
-       
-       public String showReservations() throws Exception {
+    public String showReservations() throws Exception {
         setReservationServices(new ReservationServices());
         try {
-
+            
             if (!reservationList.isEmpty()) {
                 setNoData(false);
                 System.out.println("Reservationt retrieve = " + getReservationList().size());
@@ -134,43 +141,42 @@ public class ReservationAction implements SessionAware {
         }
         return "RESERVATIONS";
     }
-       
-       
-        public String reservation() throws Exception {
-            System.out.println("reservation()");
-            HttpSession session = ServletActionContext.getRequest().getSession(false);
-            Restaurant restaurant = (Restaurant)session.getAttribute("restaurant");
-            setRestaurantId(restaurant.getRestaurantId());
-            setRestaurantName(restaurant.getRestaurantName());
-            setLocation(restaurant.getLocation());
-            setApproxCost(restaurant.getApproxCost());
-            System.out.println("restaurant name: "+(String)session.getAttribute("restaurantName"));
-            System.out.println("restaurant name:"+restaurantName);
-            User user = (User)session.getAttribute("User");
-            setReservationServices(new ReservationServices());
-            String returnValue = "";
-            setRestaurant(new Restaurant());
-            System.out.println("reservation: "+restaurantId+person+customerName);
+    
+    public String reservation() throws Exception {
+        System.out.println("reservation()");
+        HttpSession session = ServletActionContext.getRequest().getSession(false);
+        Restaurant restaurant = (Restaurant) session.getAttribute("restaurant");
+        setRestaurantId(restaurant.getRestaurantId());
+        setRestaurantName(restaurant.getRestaurantName());
+        setLocation(restaurant.getLocation());
+        setApproxCost(restaurant.getApproxCost());
+        System.out.println("restaurant name: " + (String) session.getAttribute("restaurantName"));
+        System.out.println("restaurant name:" + restaurantName);
+        User user = (User) session.getAttribute("User");
+        setReservationServices(new ReservationServices());
+        String returnValue = "";
+        setRestaurant(new Restaurant());
+        System.out.println("reservation: " + restaurantId + person + customerName);
         
         try {
-
-                setCtr(getReservationServices().makeReservation(restaurantId, restaurantName,
-                        user.getUserName(), getCustomerName(), getBookingDate(), getBookedTable(), getPerson(), getEmail(), getPhoneNumber()));
-                if (getCtr() > 0) {
-                    setMsg("Reservation Successfull");
-                } else {
-                    setMsg("Some error");
-                }
-                returnValue = "RESERVED";
-
-
+            
+            setCtr(getReservationServices().makeReservation(restaurantId, restaurantName,
+                    user.getUserName(), getCustomerName(), getBookingDate(), getBookedTable(), getPerson(), getEmail(), getPhoneNumber()));
+            if (getCtr() > 0) {
+                setMsg("Reservation Successfull");
+            } else {
+                setMsg("Some error");
+            }
+            returnValue = "RESERVED";
+            
         } catch (Exception e) {
             e.printStackTrace();
         }
-
+        
         return returnValue;
     }
-        public String cancelReservation() throws Exception {
+
+    public String cancelReservation() throws Exception {
         ReservationServices dao = new ReservationServices();
         try {
             int isDeleted = dao.cancelReservation(reservationId);
@@ -226,8 +232,6 @@ public class ReservationAction implements SessionAware {
     public void setCustomerId(int customerId) {
         this.customerId = customerId;
     }
-
-    
 
     /**
      * @return the bookedTable
@@ -341,8 +345,6 @@ public class ReservationAction implements SessionAware {
         this.rs = rs;
     }
 
-    
-
     /**
      * @return the noData
      */
@@ -356,8 +358,6 @@ public class ReservationAction implements SessionAware {
     public void setNoData(boolean noData) {
         this.noData = noData;
     }
-
-    
 
     /**
      * @return the ctr
@@ -631,20 +631,6 @@ public class ReservationAction implements SessionAware {
     }
 
     /**
-     * @return the cart
-     */
-    public ArrayList getCart() {
-        return cart;
-    }
-
-    /**
-     * @param cart the cart to set
-     */
-    public void setCart(ArrayList cart) {
-        this.cart = cart;
-    }
-
-    /**
      * @return the cartSize
      */
     public int getCartSize() {
@@ -672,5 +658,18 @@ public class ReservationAction implements SessionAware {
         this.price = price;
     }
 
-   
+    /**
+     * @return the cart
+     */
+    public ArrayList getCart() {
+        return cart;
+    }
+
+    /**
+     * @param cart the cart to set
+     */
+    public void setCart(ArrayList cart) {
+        this.cart = cart;
+    }
+    
 }

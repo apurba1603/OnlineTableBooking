@@ -47,7 +47,7 @@
 
             function addProductToCart(productId)
             {
-                
+                window.location.reload();
 //                var qty = document.getElementById("Quantity_" + pid).value;
                 $.ajax({
                     url: 'addProductToCart',
@@ -55,7 +55,7 @@
                     data: {productId: productId},
                     success: function (resultText) {
 //                        alert(resultText);
-//                        $('#result').html(resultText);
+                        $('#result').html(resultText);
                     },
                     error: function (jqXHR, exception) {
                         console.log('Error occured!!');

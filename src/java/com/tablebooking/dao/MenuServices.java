@@ -49,5 +49,35 @@ public class MenuServices {
             }
         }
     }
+     
+     public Menu fetchProduct(int productId)throws SQLException, Exception {
+         Menu product = new Menu();
+         ResultSet rs = null;
+        Connection con = null;
+        try {
+            String sql = "SELECT * FROM menu WHERE productId =?;";
+            con = ConnectionManager.getConnection();
+            System.out.println("Connection is " + con);
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, productId);
+            System.out.println("Select SQL = " + ps);
+
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                product.setProductId(rs.getInt("productId"));
+                product.setFoodItems(rs.getString("foodItems"));
+                product.setPrice(rs.getDouble("price"));
+            }
+            return product;
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        } finally {
+            if (con != null) {
+                con.close();
+            }
+        }
+     }
 
 }

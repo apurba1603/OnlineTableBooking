@@ -1,0 +1,58 @@
+<!DOCTYPE struts PUBLIC
+"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+"http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <!-- Configuration for the default package. -->
+    <package name="default" extends="struts-default">
+        <action name="index" class="com.tablebooking.actions.RestaurantAction" method="showRestaurants">
+            <result name="RESTAURANTS">/index.jsp</result>
+        </action>
+        <action name="bookTable" class="com.tablebooking.actions.RestaurantAction" method="bookTable">
+            <result name="RESTAURANT">/restaurants.jsp</result>
+        </action>
+        <action name="login" class="com.tablebooking.actions.UserAction" method="userLogin">
+            <result name="ADMINLOGIN">/adminPanel.jsp</result>
+            <result name="USERLOGIN" type="chain">/index</result>
+            <result name="LOGINFAILED">/login.jsp</result>
+        </action>
+        <action name="profile" class="com.tablebooking.actions.UserAction" method="userProfile">
+            <result name="VALID">/userProfile.jsp</result>
+            <result name="INVALID">/login.jsp</result>
+        </action>
+        <action name="logout" class="com.tablebooking.actions.UserAction" method="logout">
+            <result name="LOGOUT" >/login.jsp</result>
+        </action>
+        <action name="showMenu" class="com.tablebooking.actions.MenuAction" method="menu">
+            <result name="MENU" >/menu.jsp</result>
+        </action>
+        <action name="reservation" class="com.tablebooking.actions.ReservationAction" method="reservation">
+            <result name="RESERVED" >/orderConfirmation.jsp</result>
+        </action>
+        <action name="addProductToCart" class="com.tablebooking.actions.ReservationAction" method="addProductToCart">
+            <result name="cart" >/orderConfirmation.jsp</result>
+        </action>
+        <action name="reservations" class="com.tablebooking.actions.AdminActions" method="showAllReservations">
+            <result  name="RESERVATIONS">/reservations.jsp</result>
+        </action>
+        <action name="viewCart" class="com.tablebooking.actions.ReservationAction" method="viewCart">
+            <result  name="CART">/viewCart.jsp</result>
+        </action>
+        <action name="profile" class="com.tablebooking.actions.UserAction" method="userProfile">
+            <result name="VALID">/userProfile.jsp</result>
+            <result name="INVALID">/login.jsp</result>
+        </action>
+        <action name="updateProfileForm" >
+            <result >/updateProfile.jsp</result>
+        </action>
+        <action name="updateProfile" class="com.tablebooking.actions.UserAction" method="updateUser">
+            <result name="UPDATE" >/userProfile.jsp</result>
+        </action>
+        <action name="cancelReservation" class="com.tablebooking.actions.ReservationAction" method="cancelReservation">
+            <result name="CANCELLED" type="chain" >/profile</result>
+        </action>
+        <action name="showUsers" class="com.tablebooking.actions.AdminActions" method="showUsers">
+            <result name="REPORT" >/showReservationForAdmin.jsp</result>
+        </action>
+    </package>
+</struts>

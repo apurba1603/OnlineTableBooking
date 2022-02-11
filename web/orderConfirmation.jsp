@@ -65,14 +65,8 @@
                 <div class="collapse navbar-collapse" id="ftco-nav">
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item active"><a href="index" class="nav-link">Home</a></li>
-                        <!--<li class="nav-item"><a href="showRestaurants" class="nav-link">Restaurants</a></li>-->
-                        <li class="nav-item"><a href="showMenu" class="nav-link">Menu</a></li>
-                        <li class="nav-item"><a href="orderConfirmation.jsp" class="nav-link">order</a></li>
-                            <%--<s:if test="sessionScope.User==null">--%>
                         <li  class="nav-item" id="profile"  ><a   href="profile" class="nav-link">Profile </a></li>
                         <li style="display: block"  class="nav-item" id="login" value="logout" name="login" ><a  href="logout" class="nav-link">Logout</a></li>
-                            <%--</s:if>--%>
-                        <li class="nav-item cta"><a href="reservationForm" class="nav-link">Book a table</a></li>
 
                     </ul>
                 </div>

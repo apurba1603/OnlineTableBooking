@@ -90,7 +90,7 @@
                         <ul class="navbar-nav ml-auto">
                             <li class="nav-item active"><a href="index" class="nav-link">Home</a></li>
                             <li  class="nav-item" id="profile"  ><a   href="profile" class="nav-link">Profile </a></li>
-                            <li style="display: block"  class="nav-item" id="login" value="logout" name="login" ><a  href="login" class="nav-link">Logout</a></li>
+                            <li style="display: block"  class="nav-item" id="login" value="logout" name="login" ><a  href="logout" class="nav-link">Logout</a></li>
                             <li class="nav-item cta"><a onclick="showCartValue()" id="viewCart" name="viewCart" href="viewCart" class="nav-link">View Cart  | <span id="result"></span></a></li>
 
                         </ul>
@@ -130,45 +130,56 @@
                                         </tr>
                                     </thead>
                                     <s:iterator value="cart">
-                                    <tbody>
-                                        <tr class="alert" role="alert">
-                                            <td>
-                                                <label class="checkbox-wrap checkbox-primary">
-                                                    <input type="checkbox" checked>
-                                                    <span class="checkmark"></span>
-                                                </label>
-                                            </td>
-                                            <td>
-                                                <div class="img" style="background-image: url(tableResources/images/product-<s:property value="productId"/>.jpg);"></div>
-                                            </td>
-                                            <td>
-                                                <div class="email">
-                                                    <span><s:property value="foodItems"/> </span>
-                                                    <span>Fugiat voluptates quasi nemo, ipsa perferendis</span>
-                                                </div>
-                                            </td>
-                                            <td>₹<s:property value="price"/></td>
-                                            <td class="quantity">
-                                                <div class="input-group">
-                                                    <input type="text" name="quantity" class="quantity form-control input-number" value="1" min="1" max="10">
-                                                </div>
-                                            </td>
-                                            <td>₹<s:property value="price"/></td>
-                                            <td>
-                                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                                    <span aria-hidden="true"><i class="fa fa-close"></i></span>
-                                                </button>
-                                            </td>
-                                        </tr>
+                                        <tbody>
+                                            <tr class="alert" role="alert">
+                                                <td>
+                                                    <label class="checkbox-wrap checkbox-primary">
+                                                        <input type="checkbox" checked>
+                                                        <span class="checkmark"></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <div class="img" style="background-image: url(tableResources/images/product-<s:property value="productId"/>.jpg);"></div>
+                                                </td>
+                                                <td>
+                                                    <div class="email">
+                                                        <span><s:property value="foodItems"/> </span>
+                                                        <span>Fugiat voluptates quasi nemo, ipsa perferendis</span>
+                                                    </div>
+                                                </td>
+                                                <td>₹<s:property value="price"/></td>
+                                                <td class="quantity">
+                                                    <div class="input-group">
+                                                        <input type="text" name="quantity" class="quantity form-control input-number" value="1" min="1" max="10">
+                                                    </div>
+                                                </td>
+                                                <td>₹<s:property value="price"/></td>
+                                                <td>
+                                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                        <span aria-hidden="true"><i class="fa fa-close"></i></span>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                            </s:iterator>
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td><h5>Total=₹<s:property value="subTotal"/></h5></td><br>
+                                        <td><a href="bookTableAndOrder"><input class="btn btn-primary" type="button" value="Proceed" class="form-control submit px-3"></a></td>
+                                            </tr>
 
-                                    </tbody>
-                                    </s:iterator>
+                                        </tbody>
+                                    
                                 </table>
+
                             </div>
                         </div>
                     </div>
                 </div>
             </section>
+            
 
 
 

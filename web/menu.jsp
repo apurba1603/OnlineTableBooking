@@ -6,7 +6,11 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="s" uri="/struts-tags"%>
-
+<%
+response.setHeader("Cache-Control","no-cache"); //HTTP 1.1
+response.setHeader("Pragma","no-cache"); //HTTP 1.0
+response.setDateHeader ("Expires", 0);
+%>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -41,13 +45,14 @@
             {
                 if ("${sessionScope.Cart.size()}" > 0) {
                     $('#result').html(<s:property value="#session.Cart.size()" />);
-
-                } 
+                    
+                }
+                
             }
 
             function addProductToCart(productId)
             {
-                window.location.reload();
+                
 //                var qty = document.getElementById("Quantity_" + pid).value;
                 $.ajax({
                     url: 'addProductToCart',
@@ -56,11 +61,13 @@
                     success: function (resultText) {
 //                        alert(resultText);
                         $('#result').html(resultText);
+                        
                     },
                     error: function (jqXHR, exception) {
                         console.log('Error occured!!');
                     }
                 });
+                window.location.reload();
             }
 
 
@@ -80,7 +87,7 @@
                         <ul class="navbar-nav ml-auto">
                         <li class="nav-item active"><a href="index" class="nav-link">Home</a></li>
                         <li  class="nav-item" id="profile"  ><a   href="profile" class="nav-link">Profile </a></li>
-                        <li style="display: block"  class="nav-item" id="login" value="logout" name="login" ><a  href="login" class="nav-link">Logout</a></li>
+                        <li style="display: block"  class="nav-item" id="login" value="logout" name="login" ><a  href="logout" class="nav-link">Logout</a></li>
                         <li class="nav-item cta"><a onclick="showCartValue()" id="viewCart" name="viewCart" href="viewCart" class="nav-link">View Cart  | <span id="result"></span></a></li>
 
                     </ul>

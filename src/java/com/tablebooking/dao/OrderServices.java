@@ -20,18 +20,15 @@ import java.util.List;
  * @author amankumar
  */
 public class OrderServices {
-      public int registerOrder(int orderId, int restaurantId, int customerId, 
-            int items) throws Exception { 
+      public int registerOrder(int restaurantId, String customerId) throws Exception { 
          int i = 0;
         Connection con = null;
          try {
         con = ConnectionManager.getConnection();
-         String sql = "INSERT INTO orders (orderId,restaurantId,customerId,items) VALUES (?,?,?,?)";
+         String sql = "INSERT INTO orders (restaurantId,customerId) VALUES (?,?)";
          PreparedStatement ps = con.prepareStatement(sql);
-         ps.setInt(1, orderId);
-         ps.setInt(2, restaurantId);
-         ps.setInt(3, customerId);
-         ps.setInt(4, items);
+         ps.setInt(1, restaurantId);
+         ps.setString(2, customerId);
         
          System.out.println("SQL for insert=" + ps);
          i = ps.executeUpdate(); 
@@ -61,7 +58,7 @@ public class OrderServices {
                 Order order = new Order();
                 order.setOrderId(rs.getInt("orderId"));
                 order.setRestaurantId(rs.getInt("restaurantId"));
-                order.setCustomerId(rs.getInt("customerId"));
+                order.setCustomerId(rs.getString("customerId"));
                 order.setItems(rs.getInt("items"));
                
 
@@ -98,7 +95,7 @@ public class OrderServices {
 
                 order.setOrderId(rs.getInt("orderId"));
                 order.setRestaurantId(rs.getInt("restaurantId"));
-                order.setCustomerId(rs.getInt("customerId"));
+                order.setCustomerId(rs.getString("customerId"));
                 order.setItems(rs.getInt("items"));
              
 
@@ -181,7 +178,7 @@ public class OrderServices {
                 order = new Order();
                 order.setOrderId(rs.getInt("orderId"));
                 order.setRestaurantId(rs.getInt("restaurantId"));
-                order.setCustomerId(rs.getInt("customerId"));
+                order.setCustomerId(rs.getString("customerId"));
                 order.setItems(rs.getInt("items"));
                 order.setStatus(true);
             }

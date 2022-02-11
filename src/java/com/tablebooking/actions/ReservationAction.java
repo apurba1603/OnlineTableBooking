@@ -6,10 +6,12 @@
 package com.tablebooking.actions;
 
 import com.tablebooking.beans.Menu;
+import com.tablebooking.beans.Order;
 import com.tablebooking.beans.Reservations;
 import com.tablebooking.beans.Restaurant;
 import com.tablebooking.beans.User;
 import com.tablebooking.dao.MenuServices;
+import com.tablebooking.dao.OrderServices;
 import com.tablebooking.dao.ReservationServices;
 import com.tablebooking.dao.RestaurantServices;
 import java.io.IOException;
@@ -43,6 +45,7 @@ public class ReservationAction implements SessionAware {
     private int reservationId;
     private int customerId;
     private String bookingDate;
+    private double subTotal;
     private String time;
     private int bookedTable;
     private int orderId;
@@ -122,7 +125,12 @@ public class ReservationAction implements SessionAware {
        public String viewCart() throws Exception {
         setCart(new ArrayList<Menu>());  
         setCart((ArrayList) sessionMap.get("Cart"));
-//        ArrayList cart =(ArrayList) sessionMap.get("Cart");
+        int i = 0;
+        while(i<cart.size()){
+            Menu product = (Menu) cart.get(i);
+            subTotal+=product.getPrice();
+            i++;
+        }
            return "CART"; 
        }
     public String showReservations() throws Exception {
@@ -144,15 +152,14 @@ public class ReservationAction implements SessionAware {
     
     public String reservation() throws Exception {
         System.out.println("reservation()");
-        HttpSession session = ServletActionContext.getRequest().getSession(false);
-        Restaurant restaurant = (Restaurant) session.getAttribute("restaurant");
+        Restaurant restaurant = (Restaurant) sessionMap.get("restaurant");
         setRestaurantId(restaurant.getRestaurantId());
         setRestaurantName(restaurant.getRestaurantName());
         setLocation(restaurant.getLocation());
         setApproxCost(restaurant.getApproxCost());
-        System.out.println("restaurant name: " + (String) session.getAttribute("restaurantName"));
+        System.out.println("restaurant name: " + (String) sessionMap.get("restaurantName"));
         System.out.println("restaurant name:" + restaurantName);
-        User user = (User) session.getAttribute("User");
+        User user = (User) sessionMap.get("User");
         setReservationServices(new ReservationServices());
         String returnValue = "";
         setRestaurant(new Restaurant());
@@ -160,6 +167,42 @@ public class ReservationAction implements SessionAware {
         
         try {
             
+            setCtr(getReservationServices().makeReservation(restaurantId, restaurantName,
+                    user.getUserName(), getCustomerName(), getBookingDate(), getBookedTable(), getPerson(), getEmail(), getPhoneNumber()));
+            if (getCtr() > 0) {
+                setMsg("Reservation Successfull");
+            } else {
+                setMsg("Some error");
+            }
+            returnValue = "RESERVED";
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        return returnValue;
+    }
+    
+    
+    public String reservationAndOrder() throws Exception {
+        System.out.println("reservationAndOrder()");
+        Restaurant restaurant = (Restaurant) sessionMap.get("restaurant");
+        setRestaurantId(restaurant.getRestaurantId());
+        setRestaurantName(restaurant.getRestaurantName());
+        setLocation(restaurant.getLocation());
+        setApproxCost(restaurant.getApproxCost());
+        System.out.println("restaurant name: " + (String) sessionMap.get("restaurantName"));
+        System.out.println("restaurant name:" + restaurantName);
+        User user = (User) sessionMap.get("User");
+        setReservationServices(new ReservationServices());
+        String returnValue = "";
+        setRestaurant(new Restaurant());
+        System.out.println("reservation: " + restaurantId + person + customerName);
+        
+        try {
+//            Order createOrder = new Order();
+            OrderServices createOrder = new OrderServices();
+            createOrder.registerOrder(restaurantId, user.getUserName());
             setCtr(getReservationServices().makeReservation(restaurantId, restaurantName,
                     user.getUserName(), getCustomerName(), getBookingDate(), getBookedTable(), getPerson(), getEmail(), getPhoneNumber()));
             if (getCtr() > 0) {
@@ -670,6 +713,20 @@ public class ReservationAction implements SessionAware {
      */
     public void setCart(ArrayList cart) {
         this.cart = cart;
+    }
+
+    /**
+     * @return the subTotal
+     */
+    public double getSubTotal() {
+        return subTotal;
+    }
+
+    /**
+     * @param subTotal the subTotal to set
+     */
+    public void setSubTotal(double subTotal) {
+        this.subTotal = subTotal;
     }
     
 }

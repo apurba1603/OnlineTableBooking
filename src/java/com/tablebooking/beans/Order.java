@@ -12,7 +12,7 @@ package com.tablebooking.beans;
 public class Order {
     private int orderId;
     private int restaurantId;
-    private int customerId;
+    private String customerId;
     private int items;
     private boolean status;
 
@@ -47,14 +47,14 @@ public class Order {
     /**
      * @return the customerId
      */
-    public int getCustomerId() {
+    public String getCustomerId() {
         return customerId;
     }
 
     /**
      * @param customerId the customerId to set
      */
-    public void setCustomerId(int customerId) {
+    public void setCustomerId(String customerId) {
         this.customerId = customerId;
     }
 

@@ -4,18 +4,14 @@
  */
 package com.tablebooking.actions;
 
-import com.opensymphony.xwork2.ActionSupport;
 import com.tablebooking.beans.Restaurant;
 import com.tablebooking.beans.User;
 import com.tablebooking.dao.ReservationServices;
 import com.tablebooking.dao.RestaurantServices;
-import com.tablebooking.dao.UserServices;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import javax.servlet.http.HttpSession;
-import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.dispatcher.SessionMap;
 import org.apache.struts2.interceptor.SessionAware;
 
@@ -25,6 +21,12 @@ import org.apache.struts2.interceptor.SessionAware;
  */
 public class RestaurantAction implements SessionAware {
 
+    private String userName;
+    private String firstName;
+    private String lastName;
+    private String address;
+    private String email;
+    private String phoneNumber;
     private int restaurantId;
     private String restaurantName;
     private String location;
@@ -39,8 +41,6 @@ public class RestaurantAction implements SessionAware {
     private int orderId;
     private String customerName;
     private int person;
-    private String email;
-    private String phoneNumber;
     private ResultSet rs = null;
     private Restaurant restaurant = null;
     private boolean noData = false;
@@ -49,6 +49,7 @@ public class RestaurantAction implements SessionAware {
     private List<Restaurant> restaurantList = null;
     private String name, password;
     private SessionMap<String, Object> sessionMap;
+    private User user=null;
 
     private String msg = "";
     private int ctr = 0;
@@ -88,6 +89,37 @@ public class RestaurantAction implements SessionAware {
                 setTimings(restaurant.getTimings());
                 setApproxCost(restaurant.getApproxCost());
                 sessionMap.put("restaurant", restaurant);
+                System.out.println("Restaurant name :" + restaurantName);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return "RESTAURANT";
+    }
+    
+    public String bookTableAndOrder() throws Exception {
+
+        try {
+            restaurantServices = new RestaurantServices();
+            setRestaurantId((int)sessionMap.get("restaurantId"));
+            user=(User)sessionMap.get("User");
+            System.out.println("Restaurant id :" + restaurantId);
+            
+            Restaurant restaurant = restaurantServices.fetchRestaurantDetails(getRestaurantId());
+            System.out.println("restaurant=" + restaurant);
+            if (restaurant != null) {
+                setRestaurantName(restaurant.getRestaurantName());
+                setLocation(restaurant.getLocation());
+                setTimings(restaurant.getTimings());
+                setApproxCost(restaurant.getApproxCost());
+                sessionMap.put("restaurant", restaurant);
+                setUserName(user.getUserName());
+                setFirstName(user.getFirstName());
+                setLastName(user.getLastName());
+                setEmail(user.getEmail());
+                setPhoneNumber(user.getPhoneNumber());
                 System.out.println("Restaurant name :" + restaurantName);
             }
 
@@ -439,6 +471,62 @@ public class RestaurantAction implements SessionAware {
     @Override
     public void setSession(Map<String, Object> map) {
         sessionMap = (SessionMap) map; // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    /**
+     * @return the userName
+     */
+    public String getUserName() {
+        return userName;
+    }
+
+    /**
+     * @param userName the userName to set
+     */
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    /**
+     * @return the firstName
+     */
+    public String getFirstName() {
+        return firstName;
+    }
+
+    /**
+     * @param firstName the firstName to set
+     */
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    /**
+     * @return the lastName
+     */
+    public String getLastName() {
+        return lastName;
+    }
+
+    /**
+     * @param lastName the lastName to set
+     */
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    /**
+     * @return the address
+     */
+    public String getAddress() {
+        return address;
+    }
+
+    /**
+     * @param address the address to set
+     */
+    public void setAddress(String address) {
+        this.address = address;
     }
 
 }

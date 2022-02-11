@@ -9,7 +9,10 @@
             <result name="RESTAURANTS">/index.jsp</result>
         </action>
         <action name="bookTable" class="com.tablebooking.actions.RestaurantAction" method="bookTable">
-            <result name="RESTAURANT">/restaurants.jsp</result>
+            <result name="RESTAURANT">/reservationForm.jsp</result>
+        </action>
+        <action name="bookTableAndOrder" class="com.tablebooking.actions.RestaurantAction" method="bookTableAndOrder">
+            <result name="RESTAURANT">/reservationForm.jsp</result>
         </action>
         <action name="login" class="com.tablebooking.actions.UserAction" method="userLogin">
             <result name="ADMINLOGIN">/adminPanel.jsp</result>
@@ -27,6 +30,9 @@
             <result name="MENU" >/menu.jsp</result>
         </action>
         <action name="reservation" class="com.tablebooking.actions.ReservationAction" method="reservation">
+            <result name="RESERVED" >/orderConfirmation.jsp</result>
+        </action>
+        <action name="reservationAndOrder" class="com.tablebooking.actions.ReservationAction" method="reservationAndOrder">
             <result name="RESERVED" >/orderConfirmation.jsp</result>
         </action>
         <action name="addProductToCart" class="com.tablebooking.actions.ReservationAction" method="addProductToCart">

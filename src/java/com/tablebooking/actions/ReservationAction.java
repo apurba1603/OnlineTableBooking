@@ -6,7 +6,6 @@
 package com.tablebooking.actions;
 
 import com.tablebooking.beans.Menu;
-import com.tablebooking.beans.Order;
 import com.tablebooking.beans.Reservations;
 import com.tablebooking.beans.Restaurant;
 import com.tablebooking.beans.User;
@@ -22,7 +21,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.servlet.http.HttpSession;
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.dispatcher.SessionMap;
 import org.apache.struts2.interceptor.SessionAware;
@@ -168,7 +166,7 @@ public class ReservationAction implements SessionAware {
         try {
             
             setCtr(getReservationServices().makeReservation(restaurantId, restaurantName,
-                    user.getUserName(), getCustomerName(), getBookingDate(), getBookedTable(), getPerson(), getEmail(), getPhoneNumber()));
+                    user.getUserName(), getCustomerName(), getBookingDate(), getBookedTable(), getPerson(),0, getEmail(), getPhoneNumber()));
             if (getCtr() > 0) {
                 setMsg("Reservation Successfull");
             } else {
@@ -202,9 +200,12 @@ public class ReservationAction implements SessionAware {
         try {
 //            Order createOrder = new Order();
             OrderServices createOrder = new OrderServices();
-            createOrder.registerOrder(restaurantId, user.getUserName());
+            int lastOrderId=createOrder.registerOrder(restaurantId, user.getUserName());
+            
+            createOrder.orderItems(lastOrderId, (ArrayList) sessionMap.get("Cart"));
+            
             setCtr(getReservationServices().makeReservation(restaurantId, restaurantName,
-                    user.getUserName(), getCustomerName(), getBookingDate(), getBookedTable(), getPerson(), getEmail(), getPhoneNumber()));
+                    user.getUserName(), getCustomerName(), getBookingDate(), getBookedTable(), getPerson(), lastOrderId, getEmail(), getPhoneNumber()));
             if (getCtr() > 0) {
                 setMsg("Reservation Successfull");
             } else {

@@ -1,7 +1,9 @@
 package com.tablebooking.actions;
 
+import com.tablebooking.beans.Menu;
 import com.tablebooking.beans.Reservations;
 import com.tablebooking.beans.User;
+import com.tablebooking.dao.OrderServices;
 import com.tablebooking.dao.ReservationServices;
 import com.tablebooking.dao.UserServices;
 import java.sql.ResultSet;
@@ -37,6 +39,7 @@ public class UserAction implements SessionAware {
     private boolean noData = false;
     private ReservationServices reservationServices = null;
     private List<Reservations> reservationList = null;
+    private List<Menu> orderList = null;
     private int reservationId;
     private Reservations reservation = null;
     private int restaurantId;
@@ -120,14 +123,14 @@ public class UserAction implements SessionAware {
     }
     
     public String userProfile() throws Exception {
-        HttpSession session = ServletActionContext.getRequest().getSession(false);
-        User user = (User) session.getAttribute("User");
-        System.out.println("user:" + user);
+        
         String valid;
-        setReservationServices(new ReservationServices());
-        System.out.println("in userProfile "+user.getUserName());
+        
+//        System.out.println("in userProfile "+user.getUserName());
 
         try {
+            User user = (User) sessionMap.get("User");
+        System.out.println("user:" + user);
             System.out.println("in try block user:" + user.isValidUser());
             if (user != null && user.isValidUser()) {
                 setUserName(user.getUserName());
@@ -137,6 +140,7 @@ public class UserAction implements SessionAware {
                 setEmail(user.getEmail());
                 setPhoneNumber(user.getPhoneNumber());
                 setReservationList(new ArrayList<Reservations>());
+                setReservationServices(new ReservationServices());
                 setReservationList(getReservationServices().fetchReservationDetails(getUserName()));
                 if (!reservationList.isEmpty()) {
                     setNoData(false);
@@ -158,6 +162,13 @@ public class UserAction implements SessionAware {
         System.out.println(valid);
         log.info("This is log4j");
         return valid;
+    }
+    
+    public String showOrders() throws Exception {
+        OrderServices orders = new OrderServices();
+        setOrderList(orders.showOrders(reservationId));
+        this.userProfile();
+        return "VALID";
     }
 
     public String logout() throws Exception {
@@ -663,5 +674,19 @@ public class UserAction implements SessionAware {
      */
     public void setSessionMap(SessionMap<String, Object> sessionMap) {
         this.sessionMap = sessionMap;
+    }
+
+    /**
+     * @return the orderList
+     */
+    public List<Menu> getOrderList() {
+        return orderList;
+    }
+
+    /**
+     * @param orderList the orderList to set
+     */
+    public void setOrderList(List<Menu> orderList) {
+        this.orderList = orderList;
     }
 }

@@ -39,7 +39,7 @@
             <result name="cart" >/orderConfirmation.jsp</result>
         </action>
         <action name="reservations" class="com.tablebooking.actions.AdminActions" method="showAllReservations">
-            <result  name="RESERVATIONS">/reservations.jsp</result>
+            <result  name="RESERVATIONS">/showAllReservations.jsp</result>
         </action>
         <action name="viewCart" class="com.tablebooking.actions.ReservationAction" method="viewCart">
             <result  name="CART">/viewCart.jsp</result>
@@ -58,7 +58,13 @@
             <result name="CANCELLED" type="chain" >/profile</result>
         </action>
         <action name="showUsers" class="com.tablebooking.actions.AdminActions" method="showUsers">
-            <result name="REPORT" >/showReservationForAdmin.jsp</result>
+            <result name="REPORT" >/showAllUsers.jsp</result>
+        </action>
+        <action name="registerUser" class="com.tablebooking.actions.UserAction" method="registerUser">
+            <result name="REGISTER">/login.jsp</result>
+        </action>
+        <action name="showOrders" class="com.tablebooking.actions.UserAction" method="showOrders">
+            <result name="VALID">/userProfile.jsp</result>
         </action>
     </package>
 </struts>

@@ -6,146 +6,117 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="s" uri="/struts-tags"%>
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
-    <meta name="generator" content="Hugo 0.88.1">
-    <title>Dashboard</title>
-    <!-- Bootstrap core CSS -->
-    <link href="./css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="">
 
-    <meta name="theme-color" content="#7952b3">
+        <title>Startmin - Bootstrap Admin Theme</title>
 
+        <!-- Bootstrap Core CSS -->
+        <link href="adminResources/css/bootstrap.min.css" rel="stylesheet">
 
-    <style>
-        .bd-placeholder-img {
-            font-size: 1.125rem;
-            text-anchor: middle;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            user-select: none;
-        }
+        <!-- MetisMenu CSS -->
+        <link href="adminResources/css/metisMenu.min.css" rel="stylesheet">
 
-        @media (min-width: 768px) {
-            .bd-placeholder-img-lg {
-                font-size: 3.5rem;
-            }
-        }
-    </style>
+        <!-- Custom CSS -->
+        <link href="adminResources/css/startmin.css" rel="stylesheet">
 
+        <!-- Custom Fonts -->
+        <link href="adminResources/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
-    <!-- Custom styles for this template -->
-    <link href="./css/dashboard.css" rel="stylesheet">
-</head>
-<body>
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+    </head>
+    <body>
 
-    <header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
-        <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="http://www.exavalu.com">
-            Exavalu<br>
-            Welcome <s:property value="firstName" />
-        </a>
-        <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
-        <div class="navbar-nav">
-                <div class="nav-item text-nowrap">
-                    <a class="nav-link px-3" href="#">
-                        <i  class="fa" style="font-size:28px">&#xf07a; <span id="result"</span></i>  <br> View Cart
-                    </a>                   
+        <div id="wrapper">
+
+            <!-- Navigation -->
+            <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="index.html">Startmin</a>
                 </div>
-            </div>
-        <div class="navbar-nav">
-            <div class="nav-item text-nowrap">
-                <a class="nav-link px-3" href="login.jsp">Sign out</a>
-            </div>
-        </div>
-    </header>
-    <div class="container-fluid">
-        <div class="row">
-            <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
-                <div class="position-sticky pt-3">
-                    <ul class="nav flex-column">
-                        <li class="nav-item">
-                            <a class="nav-link active" href="Dashboard">
-                                <span data-feather="home"></span>
-                                Dashboard
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="newjsp.jsp">
-                                <span data-feather="file"></span>
-                                Orders
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="showReservationForAdmin">
-                                <span data-feather="shopping-cart"></span>
-                                Reservations
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="report">
-                                <span data-feather="users"></span>
-                                Customers
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <span data-feather="bar-chart-2"></span>
-                                Reports
-                            </a>
-                        </li>
-                    </ul>
 
-                    <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-                        <span>Saved reports</span>
-                        <a class="link-secondary" href="#" aria-label="Add a new report">
-                            <span data-feather="plus-circle"></span>
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+
+                <ul class="nav navbar-nav navbar-left navbar-top-links">
+                    <li><a href="#"><i class="fa fa-home fa-fw"></i> Website</a></li>
+                </ul>
+
+                <ul class="nav navbar-right navbar-top-links">
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="logout">
+                            Logout<i class="fa fa-sign-out fa-fw"></i>
                         </a>
-                    </h6>
-                    <ul class="nav flex-column mb-2">
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <span data-feather="file-text"></span>
-                                Current month
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <span data-feather="file-text"></span>
-                                Last quarter
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <span data-feather="file-text"></span>
-                                Social engagement
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <span data-feather="file-text"></span>
-                                Year-end sale
-                            </a>
-                        </li>
-                    </ul>
+                        
+                    </li>
+                </ul>
+
+
+
+                <!-- /.navbar-top-links -->
+
+                <div class="navbar-default sidebar" role="navigation">
+                    <div class="sidebar-nav navbar-collapse">
+                        <ul class="nav" id="side-menu">
+                            <li>
+                                <a href="#"><i class="fa fa-dashboard fa-fw"></i> Dashboard<span class="fa arrow"></span></a>
+                                <ul class="nav nav-second-level">
+                                    <li>
+                                        <a href="reservations">Reservations</a>
+                                    </li>
+                                    <li>
+                                        <a href="showUsers">Users</a>
+                                    </li>
+                                </ul>
+                                <!-- /.nav-second-level -->
+                            </li> 
+                            <li>
+                                <a href="#"><i class="fa fa-edit fa-fw"></i> Services<span class="fa arrow"></span></a>
+                                <ul class="nav nav-second-level">
+                                    <li>
+                                        <a href="addRestaurant.jsp">Add Restaurant</a>
+                                    </li>
+                                    <li>
+                                        <a href="addMenu.jsp">Add Menu</a>
+                                    </li>
+                                </ul>
+                                <!-- /.nav-second-level -->
+                            </li> 
+                        </ul>
+                    </div>
+                    <!-- /.sidebar-collapse -->
                 </div>
+                <!-- /.navbar-static-side -->
             </nav>
 
-        </div>
-    </div>
+            
 
+        <!-- jQuery -->
+        <script src="adminResources/js/jquery.min.js"></script>
 
-    <script src="./js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-    <script src="./js/feather.min.js" crossorigin="anonymous"></script>
-    <script src="./js/Chart.min.js" crossorigin="anonymous"></script>
-    <script src="./js/dashboard.js"></script>
-</body>
+        <!-- Bootstrap Core JavaScript -->
+        <script src="adminResources/js/bootstrap.min.js"></script>
+
+        <!-- Metis Menu Plugin JavaScript -->
+        <script src="adminResources/js/metisMenu.min.js"></script>
+
+        <!-- Custom Theme JavaScript -->
+        <script src="adminResources/js/startmin.js"></script>
+
+    </body>
 </html>
-

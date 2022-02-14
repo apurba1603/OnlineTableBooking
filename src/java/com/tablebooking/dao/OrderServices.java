@@ -5,6 +5,7 @@
  */
 package com.tablebooking.dao;
 
+import com.tablebooking.beans.Menu;
 import com.tablebooking.beans.Order;
 import com.tablebooking.beans.User;
 import com.tablebooking.core.ConnectionManager;
@@ -20,19 +21,30 @@ import java.util.List;
  * @author amankumar
  */
 public class OrderServices {
-      public int registerOrder(int restaurantId, String customerId) throws Exception { 
-         int i = 0;
+
+    public int registerOrder(int restaurantId, String customerId) throws Exception {
+        int i = 0;
         Connection con = null;
-         try {
-        con = ConnectionManager.getConnection();
-         String sql = "INSERT INTO orders (restaurantId,customerId) VALUES (?,?)";
-         PreparedStatement ps = con.prepareStatement(sql);
-         ps.setInt(1, restaurantId);
-         ps.setString(2, customerId);
-        
-         System.out.println("SQL for insert=" + ps);
-         i = ps.executeUpdate(); 
-         return i;
+        try {
+            con = ConnectionManager.getConnection();
+            String sql = "INSERT INTO orders (restaurantId,customerId) VALUES (?,?)";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, restaurantId);
+            ps.setString(2, customerId);
+
+            System.out.println("SQL for insert=" + ps);
+            i = ps.executeUpdate();
+
+            sql = "SELECT MAX(orderId) as orderId from orders where customerId=?;";
+            ps = con.prepareStatement(sql);
+            ps.setString(1, customerId);
+            ResultSet rs = null;
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                i = rs.getInt("orderId");
+            }
+
+            return i;
         } catch (Exception e) {
             e.printStackTrace();
             return i;
@@ -40,28 +52,59 @@ public class OrderServices {
             if (con != null) {
                 con.close();
             }
-         }
+        }
     }
-      
-    public List report() throws SQLException, Exception {
+
+    public int orderItems(int orderId, ArrayList cart) throws SQLException, Exception {
+        int j = 0;
+        int i=0;
+        Connection con = null;
+        System.out.println("orderItems");
+        try {
+            while (i < cart.size()) {
+                Menu product = (Menu) cart.get(i);
+                con = ConnectionManager.getConnection();
+                String sql = "INSERT INTO itemsordered\n"
+                        + "VALUES(?,?,?);";
+                PreparedStatement ps = con.prepareStatement(sql);
+                ps.setInt(1, orderId);
+                ps.setInt(2, product.getProductId());
+                ps.setString(3, product.getFoodItems());
+                System.out.println("orderItems: " + ps);
+                j=ps.executeUpdate();
+                
+                i++;
+
+            }
+            return j;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return j;
+        } finally {
+            if (con != null) {
+                con.close();
+            }
+        }
+
+    }
+
+    public List showOrders(int reservationId) throws SQLException, Exception {
         ResultSet rs = null;
         Connection con = null;
-        List<Order> orderList = new ArrayList<>();
+        System.out.println("showOrders:@94 "+reservationId);
+        List<Menu> orderList = new ArrayList<>();
         try {
-            String sql = "SELECT orderId, restaurantId, customerId, items FROM orders";
+            String sql = "SELECT foodItems from itemsordered WHERE orderId=( SELECT orderId FROM reservation WHERE reservationId=?)";
             con = ConnectionManager.getConnection();
             System.out.println("Connection is " + con);
             PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, reservationId);
             rs = ps.executeQuery();
             while (rs.next()) {
+                System.out.println("showOrders: "+ps);
 
-                Order order = new Order();
-                order.setOrderId(rs.getInt("orderId"));
-                order.setRestaurantId(rs.getInt("restaurantId"));
-                order.setCustomerId(rs.getString("customerId"));
-                order.setItems(rs.getInt("items"));
-               
-
+                Menu order = new Menu();
+                order.setFoodItems(rs.getString("foodItems"));
 
                 orderList.add(order);
             }
@@ -75,8 +118,7 @@ public class OrderServices {
             }
         }
     }
-    
-    
+
     public Order fetchOrderDetails(Integer orderId) throws SQLException, Exception {
         ResultSet rs = null;
         Connection con = null;
@@ -97,7 +139,6 @@ public class OrderServices {
                 order.setRestaurantId(rs.getInt("restaurantId"));
                 order.setCustomerId(rs.getString("customerId"));
                 order.setItems(rs.getInt("items"));
-             
 
             }
             return order;
@@ -111,7 +152,7 @@ public class OrderServices {
         }
     }
 
-    public int updateOrderDetails(Integer orderId, Integer restaurantId, Integer customerId, 
+    public int updateOrderDetails(Integer orderId, Integer restaurantId, Integer customerId,
             Integer items) throws SQLException, Exception {
 
         Connection con = ConnectionManager.getConnection();
@@ -125,7 +166,7 @@ public class OrderServices {
             ps.setInt(2, customerId);
             ps.setInt(3, items);
             ps.setInt(4, orderId);
-          
+
             System.out.println("Select SQL = " + ps);
             i = ps.executeUpdate();
             return i;
@@ -169,7 +210,7 @@ public class OrderServices {
             PreparedStatement ps = con.prepareStatement(sql);
             System.out.println("orderId = " + orderId);
             ps.setInt(1, orderId);
-          
+
             System.out.println("Select SQL = " + ps);
 
             rs = ps.executeQuery();
@@ -195,6 +236,3 @@ public class OrderServices {
     }
 
 }
-
-
-

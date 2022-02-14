@@ -21,7 +21,7 @@ import java.util.List;
 public class ReservationServices {
 
     public int makeReservation(int restaurantId, String restaurantName, String customerId, String customerName,
-            String bookingDate, int bookedTable, int person,
+            String bookingDate, int bookedTable, int person, int orderId,
             String email, String phoneNumber) throws SQLException {
         int i = 0;
         Connection con = null;
@@ -35,9 +35,10 @@ public class ReservationServices {
                     + "bookingDate,\n"
                     + "bookedTable,\n"
                     + "person,\n"
+                    + "orderId,\n"
                     + "email,\n"
                     + "phoneNumber)\n"
-                    + "VALUES(?,?,?,?,?,?,?,?,?);";
+                    + "VALUES(?,?,?,?,?,?,?,?,?,?);";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, restaurantId);
             ps.setString(2, restaurantName);
@@ -46,8 +47,9 @@ public class ReservationServices {
             ps.setString(5, bookingDate);
             ps.setInt(6, bookedTable);
             ps.setInt(7, person);
-            ps.setString(8, email);
-            ps.setString(9, phoneNumber);
+            ps.setInt(8, orderId);
+            ps.setString(9, email);
+            ps.setString(10, phoneNumber);
             System.out.println("SQL for insert=" + ps);
             i = ps.executeUpdate();
             return i;

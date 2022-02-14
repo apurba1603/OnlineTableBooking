@@ -49,7 +49,7 @@ public class UserServices {
         Connection con = null;
         List<User> userList = new ArrayList<>();
         try {
-            String sql = "SELECT userName, password, firstName, lastName, email, phoneNumber FROM users";
+            String sql = "SELECT * FROM users WHERE userRole=0";
             con = ConnectionManager.getConnection();
             System.out.println("Connection is " + con);
             PreparedStatement ps = con.prepareStatement(sql);
@@ -63,6 +63,7 @@ public class UserServices {
                 user.setLastName(rs.getString("lastName"));
                 user.setEmail(rs.getString("email"));
                 user.setPhoneNumber(rs.getString("phoneNumber"));
+                user.setStatus(rs.getBoolean("status"));
 
                 userList.add(user);
             }

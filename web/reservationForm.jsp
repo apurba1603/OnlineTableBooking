@@ -89,7 +89,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="">Restaurant Name</label>
-                                            <input name="restaurantName" type="text" class="form-control" value="<s:property value="restaurantName"></s:property>" readonly>
+                                            <input name="restaurantName" type="text" class="form-control" value="<s:property value="restaurantName"></s:property>" disabled>
                                             </div>
                                         </div>
                                     <div class="col-md-6">

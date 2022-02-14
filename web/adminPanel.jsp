@@ -6,162 +6,166 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="s" uri="/struts-tags"%>
-<!doctype html>
+<jsp:include page="navbarForDashboard.jsp" ></jsp:include>
+<!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="description" content="">
-        <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
-        <meta name="generator" content="Hugo 0.88.1">
-        <title>Dashboard</title>
-        <!-- Bootstrap core CSS -->
-        <link href="./css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
-        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+        <meta name="author" content="">
 
-        <meta name="theme-color" content="#7952b3">
+        <title>Startmin - Bootstrap Admin Theme</title>
 
+        <!-- Bootstrap Core CSS -->
+        <link href="adminResources/css/bootstrap.min.css" rel="stylesheet">
 
-        <style>
-            .bd-placeholder-img {
-                font-size: 1.125rem;
-                text-anchor: middle;
-                -webkit-user-select: none;
-                -moz-user-select: none;
-                user-select: none;
-            }
+        <!-- MetisMenu CSS -->
+        <link href="adminResources/css/metisMenu.min.css" rel="stylesheet">
 
-            @media (min-width: 768px) {
-                .bd-placeholder-img-lg {
-                    font-size: 3.5rem;
-                }
-            }
-        </style>
+        <!-- Custom CSS -->
+        <link href="adminResources/css/startmin.css" rel="stylesheet">
 
+        <!-- Custom Fonts -->
+        <link href="adminResources/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
-        <!-- Custom styles for this template -->
-        <link href="./css/dashboard.css" rel="stylesheet">
-        <!--adding javascript here -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
-        <script>
-            function showCartValue()
-            {
-                if ("${sessionScope.Cart.size()}" > 0) {
-                    $('#result').html('<c:out value="${sessionScope.Cart.size()}" />');
-
-                } else {
-                    document.getElementById("viewCart").style.pointerEvents = "none";
-                    document.getElementById("viewCart").style.cursor = "default";
-                }
-            }
-        </script>
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
     </head>
-    <body onload="showCartValue()">
+    <body>
 
-        <header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
-            <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="http://www.exavalu.com">
-                Exavalu<br>
-                Welcome <c:out value='${sessionScope.validUser.getFirstName()}'/>
-            </a>
-            <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="navbar-nav">
-                <div class="nav-item text-nowrap">
-                    <a class="nav-link px-3" href="Logout">Sign out</a>
+        <div id="wrapper">
+            
+            <!-- Page Content -->
+            <div id="page-wrapper">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <h1 class="page-header">Blank</h1>
+                        </div>
+                        <!-- /.col-lg-12 -->
+                    </div>
+                    <!-- /.row -->
+                    <div class="row">
+                    <div class="col-lg-3 col-md-6">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <i class="fa fa-comments fa-5x"></i>
+                                    </div>
+                                    <div class="col-xs-9 text-right">
+                                        <div class="huge">26</div>
+                                        <div>New Comments!</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="#">
+                                <div class="panel-footer">
+                                    <span class="pull-left">View Details</span>
+                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+
+                                    <div class="clearfix"></div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="panel panel-green">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <i class="fa fa-tasks fa-5x"></i>
+                                    </div>
+                                    <div class="col-xs-9 text-right">
+                                        <div class="huge">12</div>
+                                        <div>New Tasks!</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="#">
+                                <div class="panel-footer">
+                                    <span class="pull-left">View Details</span>
+                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+
+                                    <div class="clearfix"></div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="panel panel-yellow">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <i class="fa fa-shopping-cart fa-5x"></i>
+                                    </div>
+                                    <div class="col-xs-9 text-right">
+                                        <div class="huge">124</div>
+                                        <div>New Orders!</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="#">
+                                <div class="panel-footer">
+                                    <span class="pull-left">View Details</span>
+                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+
+                                    <div class="clearfix"></div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="panel panel-red">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <i class="fa fa-support fa-5x"></i>
+                                    </div>
+                                    <div class="col-xs-9 text-right">
+                                        <div class="huge">13</div>
+                                        <div>Support Tickets!</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="#">
+                                <div class="panel-footer">
+                                    <span class="pull-left">View Details</span>
+                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+
+                                    <div class="clearfix"></div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
                 </div>
+                </div>
+                <!-- /.container-fluid -->
             </div>
-        </header>
-        <div class="container-fluid">
-            <div class="row">
-                <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
-                    <div class="position-sticky pt-3">
-                        <ul class="nav flex-column">
-                            <li class="nav-item">
-                                <a class="nav-link active" href="reservations">
-                                    <span data-feather="home"></span>
-                                    Dashboard
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="ShowOrders">
-                                    <span data-feather="file"></span>
-                                    Orders
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="ShowProducts">
-                                    <span data-feather="shopping-cart"></span>
-                                    Products
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="ShowCustomers">
-                                    <span data-feather="users"></span>
-                                    Customers
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">
-                                    <span data-feather="bar-chart-2"></span>
-                                    Reports
-                                </a>
-                            </li>
-                        </ul>
+            <!-- /#page-wrapper -->
 
-                        
-                    </div>
-                </nav>
-                
-                <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-                    <div class="text-center"><span style="color: red;"><h5><s:property value="msg" /></h5></span></div>
-                    <h2>Reservations</h2>
-                    <font style="color: #a52834"><c:out value="${requestScope.MSG}"></c:out></font>
-                    <div class="fixTableHead">
-                        <s:if test="noData==false">
-                            <table class="table table-striped table-sm">
-                                <thead>
-                                    <tr>
-                                    <th scope="col">Customer Id</th>
-                                    <th scope="col">Customer Name</th>
-                                    <th scope="col">Restaurant Name</th>
-                                    <th scope="col">Booking Date</th>
-                                    <th scope="col">Booked Table</th>
-                                    <th scope="col">Persons</th>
-                                    <th scope="col">Order Id</th>
-                                    <th scope="col">Email</th>
-                                    <th scope="col">Status</th>
-                                    </tr>
-                                </thead>
-                                <s:iterator value="reservationList">
-                                    <tr>
-                                    <td><s:property value="customerId" /></td>
-                                    <td><s:property value="customerName" /></td>
-                                    <td><s:property value="restaurantName" /></td>
-                                    <td><s:property value="bookingDate" /></td>
-                                    <td><s:property value="bookedTable" /></td>
-                                    <td><s:property value="person" /></td>
-                                    <td><s:property value="orderId" /></td>
-                                    <td><s:property value="email" /></td>
-                                    <td><s:property value="status" /></td>
-                                    </tr>
-                                </s:iterator>
-                            </table>
-                        </s:if>
-                        <s:else>
-                            <div style="color: red;">No Data Found.</div>
-                        </s:else>
-                    </div>
-                </main>  
-            </div>
         </div>
+        <!-- /#wrapper -->
 
+            
 
-        <script src="./js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-        <script src="./js/feather.min.js" crossorigin="anonymous"></script>
-        <script src="./js/Chart.min.js" crossorigin="anonymous"></script>
-        <script src="./js/dashboard.js"></script>
+        <!-- jQuery -->
+        <script src="adminResources/js/jquery.min.js"></script>
+
+        <!-- Bootstrap Core JavaScript -->
+        <script src="adminResources/js/bootstrap.min.js"></script>
+
+        <!-- Metis Menu Plugin JavaScript -->
+        <script src="adminResources/js/metisMenu.min.js"></script>
+
+        <!-- Custom Theme JavaScript -->
+        <script src="adminResources/js/startmin.js"></script>
+
     </body>
 </html>
-

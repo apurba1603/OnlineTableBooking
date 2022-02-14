@@ -4,9 +4,9 @@
     Author     : Apu
 --%>
 <%
-response.setHeader("Cache-Control","no-cache"); //HTTP 1.1
-response.setHeader("Pragma","no-cache"); //HTTP 1.0
-response.setDateHeader ("Expires", 0);
+    response.setHeader("Cache-Control", "no-cache"); //HTTP 1.1
+    response.setHeader("Pragma", "no-cache"); //HTTP 1.0
+    response.setDateHeader("Expires", 0);
 %>
 <%
     if (request.getSession().getAttribute("User") == null) {
@@ -136,10 +136,22 @@ response.setDateHeader ("Expires", 0);
         <link rel="stylesheet" href="css/icomoon.css">
         <link rel="stylesheet" href="css/style.css">
 
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+        <script type="text/javascript">
+
+            $(document).ready(function () {
+                // Handler for .ready() called.
+                $('html, body').animate({
+                    scrollTop: $('#showRestaurants').offset().top
+                }, 800);
+            });
+
+        </script>
+
         <script>
 
             function makeReservation() {
-              $.ajax({
+                $.ajax({
                     url: 'reservation',
                     method: 'POST',
                     data: {},
@@ -150,7 +162,7 @@ response.setDateHeader ("Expires", 0);
                         console.log('Error occured!!');
                     }
                 });
-                
+
             }
 
             function notLoggedIn() {
@@ -185,12 +197,12 @@ response.setDateHeader ("Expires", 0);
                 <div class="collapse navbar-collapse" id="ftco-nav">
                     <ul class="navbar-nav ml-auto">
                         <%
-                                            if (request.getSession().getAttribute("User") != null) {%> 
-                                            
-                                        <li  class="nav-item" id="profile"  ><a   href="profile" class="nav-link">Profile </a></li>
-                                        <li style="display: block"  class="nav-item" id="login" value="logout" name="login" ><a  href="logout" class="nav-link">Logout</a></li>
+                            if (request.getSession().getAttribute("User") != null) {%> 
 
-                                        <% } %>
+                        <li  class="nav-item" id="profile"  ><a   href="profile" class="nav-link">Profile </a></li>
+                        <li style="display: block"  class="nav-item" id="login" value="logout" name="login" ><a  href="logout" class="nav-link">Logout</a></li>
+
+                        <% } %>
 
                     </ul>
                 </div>
@@ -199,7 +211,7 @@ response.setDateHeader ("Expires", 0);
         <!-- END nav -->
 
         <section class="home-slider owl-carousel js-fullheight">
-            
+
 
             <div class="slider-item js-fullheight" style="background-image: url(images/bg_2.jpg);" data-stellar-background-ratio="0.5">
                 <div class="overlay"></div>
@@ -217,8 +229,8 @@ response.setDateHeader ("Expires", 0);
 
         </section>
 
-        
-        <section class="ftco-section">
+
+        <section id="showRestaurants" class="ftco-section">
             <div class="container">
                 <div class="row justify-content-center mb-5 pb-2">
                     <div class="col-md-12 text-center heading-section ftco-animate">
@@ -244,8 +256,8 @@ response.setDateHeader ("Expires", 0);
 
                                         <%
                                             if (request.getSession().getAttribute("User") != null) {%> 
-                                            <button id="restaurantId" type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalDiscount" onclick="fetchRestaurantId(<s:property value="restaurantId"/>)" >Book a table</button><br><br>
-                                        
+                                        <button id="restaurantId" type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalDiscount" onclick="fetchRestaurantId(<s:property value="restaurantId"/>)" >Book a table</button><br><br>
+
 
                                         <% } else {%>
                                         <input  data-toggle="modal" type="button" data-target="#loginModal"   value="Book a table" class="btn btn-primary"><br><br>
@@ -283,8 +295,8 @@ response.setDateHeader ("Expires", 0);
                                     <div class="row d-flex">
                                         <div class="col-md-7 ftco-animate makereservation p-4 px-md-5 pb-md-5">
                                             <div class="heading-section ftco-animate mb-5 text-center">
-<!--                                                <span class="subheading">Book a table</span>
-                                                <h2 class="mb-4">Make Reservation</h2>-->
+                                                <!--                                                <span class="subheading">Book a table</span>
+                                                                                                <h2 class="mb-4">Make Reservation</h2>-->
                                             </div>
                                             <form action="reservation" method="post">
                                                 <div class="row">
@@ -292,94 +304,94 @@ response.setDateHeader ("Expires", 0);
                                                         <div class="form-group">
                                                             <label for="">Name</label>
                                                             <input name="customerName" type="text" class="form-control" value="<s:property value="firstName"></s:property>" required>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <div class="form-group">
-                                                            <label for="">Email</label>
-                                                            <input name="email" type="text" class="form-control" value="<s:property value="email"></s:property>">
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label for="">Email</label>
+                                                                <input name="email" type="text" class="form-control" value="<s:property value="email"></s:property>">
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <div class="form-group">
-                                                            <label for="">Phone</label>
-                                                            <input name="phoneNumber" type="text" class="form-control" value="<s:property value="phoneNumber"></s:property>">
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label for="">Phone</label>
+                                                                <input name="phoneNumber" type="text" class="form-control" value="<s:property value="phoneNumber"></s:property>">
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <div class="form-group">
-                                                            <label for="">Date</label>
-                                                            <input name="bookingDate" type="datetime-local" class="form-control" id="bookdate" placeholder="Date">
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label for="">Date</label>
+                                                                <input name="bookingDate" type="datetime-local" class="form-control" id="bookdate" placeholder="Date">
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <div class="form-group">
-                                                            <label for="">No. of Table</label>
-                                                            <div class="select-wrap one-third">
-                                                                <div class="icon"><span class="ion-ios-arrow-down"></span></div>
-                                                                <select name="bookedTable" id="" class="form-control">
-                                                                    <option  value="" name="bookedTable" selected hidden>No. of Table</option>
-                                                                    <!--<option value="">Person</option>-->
-                                                                    <option >1</option>
-                                                                    <option >2</option>
-                                                                    <option >3</option>
-                                                                    <option >4</option>
-                                                                </select>
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label for="">No. of Table</label>
+                                                                <div class="select-wrap one-third">
+                                                                    <div class="icon"><span class="ion-ios-arrow-down"></span></div>
+                                                                    <select name="bookedTable" id="" class="form-control">
+                                                                        <option  value="" name="bookedTable" selected hidden>No. of Table</option>
+                                                                        <!--<option value="">Person</option>-->
+                                                                        <option >1</option>
+                                                                        <option >2</option>
+                                                                        <option >3</option>
+                                                                        <option >4</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label for="">Person</label>
+                                                                <div class="select-wrap one-third">
+                                                                    <div class="icon"><span class="ion-ios-arrow-down"></span></div>
+                                                                    <select name="person" id="" class="form-control">
+                                                                        <option  value="" name="person" selected hidden>No of Person</option>
+                                                                        <!--<option value="">Person</option>-->
+                                                                        <option >1</option>
+                                                                        <option >2</option>
+                                                                        <option >3</option>
+                                                                        <option >4</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-12 mt-3">
+                                                            <div class="form-group text-center">
+                                                                <button  type="submit" class="btn btn-primary"   >Book a table</button>
+                                                                <!--<input  type="submit" data-toggle="modal" data-target="#myModal"  class="btn btn-primary"  onclick="makeReservation()"   value="Make a Reservation">-->
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-6">
-                                                        <div class="form-group">
-                                                            <label for="">Person</label>
-                                                            <div class="select-wrap one-third">
-                                                                <div class="icon"><span class="ion-ios-arrow-down"></span></div>
-                                                                <select name="person" id="" class="form-control">
-                                                                    <option  value="" name="person" selected hidden>No of Person</option>
-                                                                    <!--<option value="">Person</option>-->
-                                                                    <option >1</option>
-                                                                    <option >2</option>
-                                                                    <option >3</option>
-                                                                    <option >4</option>
-                                                                </select>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-12 mt-3">
-                                                        <div class="form-group text-center">
-                                                            <button  type="submit" class="btn btn-primary"   >Book a table</button>
-                                                            <!--<input  type="submit" data-toggle="modal" data-target="#myModal"  class="btn btn-primary"  onclick="makeReservation()"   value="Make a Reservation">-->
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </form>
+                                                </form>
+                                            </div>
                                         </div>
+
+
                                     </div>
 
-
                                 </div>
-
                             </div>
                         </div>
                     </div>
+
                 </div>
-
-            </div>
-        </section>
+            </section>
 
 
-        <!-- Modal HTML -->
-        <div id="myModal" class="modal fade">
-            <div class="modal-dialog modal-confirm">
-                <div class="modal-content">
-                    <div class="modal-header justify-content-center">
-                        <div class="icon-box">
-                            <i class="material-icons">&#xE876;</i>
+            <!-- Modal HTML -->
+            <div id="myModal" class="modal fade">
+                <div class="modal-dialog modal-confirm">
+                    <div class="modal-content">
+                        <div class="modal-header justify-content-center">
+                            <div class="icon-box">
+                                <i class="material-icons">&#xE876;</i>
+                            </div>
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         </div>
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    </div>
-                    <div class="modal-body text-center">
-                        <h4>Great!!!</h4> 
-                        <p><s:property value="msg"></s:property></p>
+                        <div class="modal-body text-center">
+                            <h4>Great!!!</h4> 
+                            <p><s:property value="msg"></s:property></p>
                         <button class="btn btn-success" data-dismiss="modal"><span>Thank you!!!</span> </button>
                     </div>
                 </div>
@@ -400,7 +412,7 @@ response.setDateHeader ("Expires", 0);
         </div>   
 
 
-<!--        Modal: modalDiscount-->
+        <!--        Modal: modalDiscount-->
         <div class="modal fade right" id="modalDiscount" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
              aria-hidden="true" data-backdrop="true">
             <div class="modal-dialog modal-side modal-bottom-right modal-notify modal-danger" role="document">

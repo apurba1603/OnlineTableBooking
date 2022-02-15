@@ -54,6 +54,7 @@ public class ReservationAction implements SessionAware {
     private String email;
     private int cartSize;
     private Double price;
+    private Double total;
     private String phoneNumber;
     private ResultSet rs = null;
     private Restaurant restaurant = null;
@@ -148,6 +149,7 @@ public class ReservationAction implements SessionAware {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+            sessionMap.put("Total", subTotal);
             cartStatus = "CART";
         }
 
@@ -218,7 +220,9 @@ public class ReservationAction implements SessionAware {
         String returnValue = "";
         setRestaurant(new Restaurant());
         System.out.println("reservation: " + restaurantId + person + customerName);
-
+        setSubTotal((double)sessionMap.get("Total"));
+        restaurant = (Restaurant)sessionMap.get("restaurant");
+        setTotal(restaurant.getApproxCost()+subTotal);
         try {
             OrderServices createOrder = new OrderServices();
             int lastOrderId = createOrder.registerOrder(restaurantId, user.getUserName());
@@ -757,6 +761,20 @@ public class ReservationAction implements SessionAware {
      */
     public void setSubTotal(double subTotal) {
         this.subTotal = subTotal;
+    }
+
+    /**
+     * @return the total
+     */
+    public Double getTotal() {
+        return total;
+    }
+
+    /**
+     * @param total the total to set
+     */
+    public void setTotal(Double total) {
+        this.total = total;
     }
 
 }

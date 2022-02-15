@@ -139,7 +139,7 @@
                                                     </label>
                                                 </td>
                                                 <td>
-                                                    <div class="img" style="background-image: url(tableResources/images/product-<s:property value="productId"/>.jpg);"></div>
+                                                    <div class="img" style="background-image: url(images/breakfast-<s:property value="productId"/>.jpg);"></div>
                                                 </td>
                                                 <td>
                                                     <div class="email">

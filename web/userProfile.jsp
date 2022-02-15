@@ -67,7 +67,7 @@
                 <div class="collapse navbar-collapse" id="ftco-nav">
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item active"><a href="index" class="nav-link">Home</a></li>
-                        <li style="display: block"  class="nav-item" id="login" value="logout" name="login" ><a  href="login" class="nav-link">Logout</a></li>
+                        <li style="display: block"  class="nav-item" id="login" value="logout" name="logout" ><a  href="logout" class="nav-link">Logout</a></li>
 
                     </ul>
                 </div>

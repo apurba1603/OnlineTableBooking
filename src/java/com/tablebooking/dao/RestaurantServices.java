@@ -31,7 +31,7 @@ public class RestaurantServices {
             ps.setString(1, restaurantName);
             ps.setString(2, location);
             ps.setString(3, timings);
-            ps.setDouble(3, approxCost);
+            ps.setDouble(4, approxCost);
             System.out.println("SQL for insert=" + ps);
             i = ps.executeUpdate();
             return i;
@@ -104,6 +104,36 @@ public class RestaurantServices {
         } catch (Exception e) {
             e.printStackTrace();
             return null;
+        } finally {
+            if (con != null) {
+                con.close();
+            }
+        }
+    }
+    
+    public int fetchRestaurantId(String restaurantName) throws SQLException, Exception {
+        
+        ResultSet rs = null;
+        int restaurantId=0;
+        Connection con = null;
+        Restaurant restaurant = new Restaurant();
+        try {
+            con = ConnectionManager.getConnection();
+            String sql = "SELECT restaurantId FROM restaurant WHERE restaurantName= ?";
+            PreparedStatement ps = con.prepareStatement(sql);
+            System.out.println("restaurantId = " + restaurantName);
+            ps.setString(1, restaurantName);
+            System.out.println("Select SQL = " + ps);
+
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                restaurantId=rs.getInt("restaurantId");
+            }
+           
+            return restaurantId;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
         } finally {
             if (con != null) {
                 con.close();

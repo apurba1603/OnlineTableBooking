@@ -8,9 +8,12 @@ package com.tablebooking.actions;
 import com.opensymphony.xwork2.ActionSupport;
 import com.tablebooking.beans.Admin;
 import com.tablebooking.beans.Reservations;
+import com.tablebooking.beans.Restaurant;
 import com.tablebooking.beans.User;
 import com.tablebooking.dao.AdminServices;
+import com.tablebooking.dao.MenuServices;
 import com.tablebooking.dao.ReservationServices;
+import com.tablebooking.dao.RestaurantServices;
 import com.tablebooking.dao.UserServices;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -34,6 +37,8 @@ public class AdminActions extends ActionSupport {
     private boolean validUser;
     private boolean status;
     private int reservationId;
+    private String foodItems;
+    private double price;
     private int restaurantId;
     private String customerId;
     private String customerName;
@@ -41,16 +46,23 @@ public class AdminActions extends ActionSupport {
     private int orderId;
     private String bookingDate;
     private String restaurantName;
+    private String location;
+    private String timings;
+    private double approxCost;
     private int person;
     private String submitType;
     private ResultSet rs = null;
     private User user = null;
     private List<User> userList = null;
+    private List<Restaurant> restaurantList = null;
     private boolean noData = false;
+    private Restaurant restaurant = null;
+    private RestaurantServices restaurantServices = null;
     private ReservationServices reservationServices = null;
     private List<Reservations> reservationList = null;
     private UserServices userServices = null;
     private String login;
+    private MenuServices addItem=null;
     
     
 
@@ -98,7 +110,45 @@ public class AdminActions extends ActionSupport {
         return "RESERVATIONS";
     }
 
+public String addRestaurant() throws Exception {
+    RestaurantServices newRestaurant = new RestaurantServices();
+    
+    try {
+            setCtr(newRestaurant.registerNewRestaurant(restaurantName, location, timings, approxCost));
+            if (getCtr() > 0) {
+                setMsg("Restaurant Added Successfully");
+            } else {
+                setMsg("Some error");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    return "SUCCESS";
+}
 
+public String addItem() throws Exception {
+        setRestaurantServices(new RestaurantServices());
+        System.out.println("line 117");
+    setRestaurantList(restaurantServices.showAllRestaurants());
+    System.out.println("addItem: "+restaurantId);
+    System.out.println("addItem: "+restaurantName);
+    restaurantId=restaurantServices.fetchRestaurantId(restaurantName);
+    System.out.println("addItem: "+restaurantId);
+    addItem=new MenuServices();
+    
+    try {
+            setCtr(addItem.addItem(restaurantId, foodItems, price));
+            if (getCtr() > 0) {
+                setMsg("Item Added Successfully");
+            } else {
+                setMsg("Some error");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    
+    return "SUCCESS";
+}
 
     
 
@@ -552,6 +602,118 @@ public class AdminActions extends ActionSupport {
      */
     public void setPerson(int person) {
         this.person = person;
+    }
+
+    /**
+     * @return the location
+     */
+    public String getLocation() {
+        return location;
+    }
+
+    /**
+     * @param location the location to set
+     */
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    /**
+     * @return the timings
+     */
+    public String getTimings() {
+        return timings;
+    }
+
+    /**
+     * @param timings the timings to set
+     */
+    public void setTimings(String timings) {
+        this.timings = timings;
+    }
+
+    /**
+     * @return the approxCost
+     */
+    public double getApproxCost() {
+        return approxCost;
+    }
+
+    /**
+     * @param approxCost the approxCost to set
+     */
+    public void setApproxCost(double approxCost) {
+        this.approxCost = approxCost;
+    }
+
+    /**
+     * @return the restaurantList
+     */
+    public List<Restaurant> getRestaurantList() {
+        return restaurantList;
+    }
+
+    /**
+     * @param restaurantList the restaurantList to set
+     */
+    public void setRestaurantList(List<Restaurant> restaurantList) {
+        this.restaurantList = restaurantList;
+    }
+
+    /**
+     * @return the restaurant
+     */
+    public Restaurant getRestaurant() {
+        return restaurant;
+    }
+
+    /**
+     * @param restaurant the restaurant to set
+     */
+    public void setRestaurant(Restaurant restaurant) {
+        this.restaurant = restaurant;
+    }
+
+    /**
+     * @return the restaurantServices
+     */
+    public RestaurantServices getRestaurantServices() {
+        return restaurantServices;
+    }
+
+    /**
+     * @param restaurantServices the restaurantServices to set
+     */
+    public void setRestaurantServices(RestaurantServices restaurantServices) {
+        this.restaurantServices = restaurantServices;
+    }
+
+    /**
+     * @return the foodItems
+     */
+    public String getFoodItems() {
+        return foodItems;
+    }
+
+    /**
+     * @param foodItems the foodItems to set
+     */
+    public void setFoodItems(String foodItems) {
+        this.foodItems = foodItems;
+    }
+
+    /**
+     * @return the price
+     */
+    public double getPrice() {
+        return price;
+    }
+
+    /**
+     * @param price the price to set
+     */
+    public void setPrice(double price) {
+        this.price = price;
     }
 
 }

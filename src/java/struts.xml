@@ -16,6 +16,7 @@
         </action>
         <action name="login" class="com.tablebooking.actions.UserAction" method="userLogin">
             <result name="ADMINLOGIN">/adminPanel.jsp</result>
+            <result name="UPDATEPROFILE">/updateProfile.jsp</result>
             <result name="USERLOGIN" type="chain">/index</result>
             <result name="LOGINFAILED">/login.jsp</result>
         </action>
@@ -26,7 +27,7 @@
         <action name="logout" class="com.tablebooking.actions.UserAction" method="logout">
             <result name="LOGOUT" >/login.jsp</result>
         </action>
-        <action name="showMenu" class="com.tablebooking.actions.MenuAction" method="menu">
+        <action name="showMenu" class="com.tablebooking.actions.RestaurantAction" method="menu">
             <result name="MENU" >/menu.jsp</result>
         </action>
         <action name="reservation" class="com.tablebooking.actions.ReservationAction" method="reservation">
@@ -43,19 +44,20 @@
         </action>
         <action name="viewCart" class="com.tablebooking.actions.ReservationAction" method="viewCart">
             <result  name="CART">/viewCart.jsp</result>
+            <result  name="EMPTYCART">/emptyCart.jsp</result>
         </action>
         <action name="profile" class="com.tablebooking.actions.UserAction" method="userProfile">
             <result name="VALID">/userProfile.jsp</result>
             <result name="INVALID">/login.jsp</result>
         </action>
         <action name="updateProfileForm" >
-            <result >/updateProfile.jsp</result>
+            <result  >/updateProfile.jsp</result>
         </action>
         <action name="updateProfile" class="com.tablebooking.actions.UserAction" method="updateUser">
             <result name="UPDATE" >/userProfile.jsp</result>
         </action>
-        <action name="cancelReservation" class="com.tablebooking.actions.ReservationAction" method="cancelReservation">
-            <result name="CANCELLED" type="chain" >/profile</result>
+        <action name="cancelReservation" class="com.tablebooking.actions.UserAction" method="cancelReservation">
+            <result name="CANCELLED" >/userProfile.jsp</result>
         </action>
         <action name="showUsers" class="com.tablebooking.actions.AdminActions" method="showUsers">
             <result name="REPORT" >/showAllUsers.jsp</result>
@@ -65,6 +67,12 @@
         </action>
         <action name="showOrders" class="com.tablebooking.actions.UserAction" method="showOrders">
             <result name="VALID">/userProfile.jsp</result>
+        </action>
+        <action name="addRestaurant" class="com.tablebooking.actions.AdminActions" method="addRestaurant">
+            <result name="SUCCESS" >/addRestaurant.jsp</result>
+        </action>
+        <action name="addItem" class="com.tablebooking.actions.AdminActions" method="addItem">
+            <result name="SUCCESS" >/addItem.jsp</result>
         </action>
     </package>
 </struts>

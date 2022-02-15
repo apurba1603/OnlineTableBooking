@@ -17,6 +17,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
@@ -65,14 +67,14 @@ public class ReservationAction implements SessionAware {
     private SessionMap<String, Object> sessionMap;
     private int ctr = 0;
     private String msg;
-    
+
     public String showAllReservation() throws Exception {
         System.out.println("showAllReservation invoked");
         setReservationServices(new ReservationServices());
         try {
             setReservationList(new ArrayList<Reservations>());
             setReservationList(getReservationServices().showAllReservations());
-            
+
             if (!reservationList.isEmpty()) {
                 setNoData(false);
                 System.out.println("Reservationt retrieve = " + getReservationList().size());
@@ -90,51 +92,72 @@ public class ReservationAction implements SessionAware {
         System.out.println("Cart: " + productId);
         MenuServices item = new MenuServices();
         if (sessionMap.get("Cart") == null) {
-            ArrayList productInCart = new ArrayList<Menu>();
-            
-            
+//            ArrayList productInCart = new ArrayList<Menu>();
+            HashMap<Integer, Menu> cart = new HashMap<>();
+
             try {
                 Menu product = item.fetchProduct(productId);
-                productInCart.add(product);
-                getSessionMap().put("Cart", productInCart);
+//                productInCart.add(product);
+                cart.put(productId, product);
+                getSessionMap().put("Cart", cart);
             } catch (Exception ex) {
                 Logger.getLogger(ReservationAction.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
-            
+
         } else {
-            ArrayList cart = (ArrayList) sessionMap.get("Cart");
+            HashMap cart = (HashMap) sessionMap.get("Cart");
             try {
                 Menu product = item.fetchProduct(productId);
-                cart.add(product);
+                cart.put(productId, product);
                 getSessionMap().put("Cart", cart);
             } catch (Exception ex) {
                 Logger.getLogger(ReservationAction.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        ArrayList cart = (ArrayList) sessionMap.get("Cart");
+        HashMap cart = (HashMap) sessionMap.get("Cart");
         PrintWriter out = ServletActionContext.getResponse().getWriter();
         out.println(cart.size());
         System.out.println("Items in cart=" + cart.size());
-        System.out.println("Cart:111 " +sessionMap.get("Cart") );
+        System.out.println("Cart:111 " + sessionMap.get("Cart") + cart.size());
+        System.out.println("Cart:123 cart size: " + cart.size());
         return "cart";
     }
 
-       public String viewCart() throws Exception {
-        setCart(new ArrayList<Menu>());  
-        setCart((ArrayList) sessionMap.get("Cart"));
-        int i = 0;
-        while(i<cart.size()){
-            Menu product = (Menu) cart.get(i);
-            subTotal+=product.getPrice();
-            i++;
+    public String viewCart() throws Exception {
+        String cartStatus = "EMPTYCART";
+        setCart(new ArrayList<Menu>());
+        ArrayList viewCart = new ArrayList<Menu>();
+        HashMap productInCart = (HashMap) sessionMap.get("Cart");
+        if (productInCart != null) {
+
+            try {
+                Iterator<Map.Entry<Integer, Menu>> itr = productInCart.entrySet().iterator();
+                while (itr.hasNext()) {
+                    Map.Entry<Integer, Menu> entry = itr.next();
+                    viewCart.add(entry.getValue());
+                }
+
+                setCart(viewCart);
+                int i = 0;
+                while (i < cart.size()) {
+                    Menu product = (Menu) cart.get(i);
+                    subTotal += product.getPrice();
+                    i++;
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            cartStatus = "CART";
         }
-           return "CART"; 
-       }
+
+        return cartStatus;
+    }
+
     public String showReservations() throws Exception {
         setReservationServices(new ReservationServices());
         try {
-            
+
             if (!reservationList.isEmpty()) {
                 setNoData(false);
                 System.out.println("Reservationt retrieve = " + getReservationList().size());
@@ -147,7 +170,7 @@ public class ReservationAction implements SessionAware {
         }
         return "RESERVATIONS";
     }
-    
+
     public String reservation() throws Exception {
         System.out.println("reservation()");
         Restaurant restaurant = (Restaurant) sessionMap.get("restaurant");
@@ -162,26 +185,25 @@ public class ReservationAction implements SessionAware {
         String returnValue = "";
         setRestaurant(new Restaurant());
         System.out.println("reservation: " + restaurantId + person + customerName);
-        
+
         try {
-            
+
             setCtr(getReservationServices().makeReservation(restaurantId, restaurantName,
-                    user.getUserName(), getCustomerName(), getBookingDate(), getBookedTable(), getPerson(),0, getEmail(), getPhoneNumber()));
+                    user.getUserName(), getCustomerName(), getBookingDate(), getBookedTable(), getPerson(), 0, getEmail(), getPhoneNumber()));
             if (getCtr() > 0) {
                 setMsg("Reservation Successfull");
             } else {
                 setMsg("Some error");
             }
             returnValue = "RESERVED";
-            
+
         } catch (Exception e) {
             e.printStackTrace();
         }
-        
+
         return returnValue;
     }
-    
-    
+
     public String reservationAndOrder() throws Exception {
         System.out.println("reservationAndOrder()");
         Restaurant restaurant = (Restaurant) sessionMap.get("restaurant");
@@ -196,14 +218,20 @@ public class ReservationAction implements SessionAware {
         String returnValue = "";
         setRestaurant(new Restaurant());
         System.out.println("reservation: " + restaurantId + person + customerName);
-        
+
         try {
-//            Order createOrder = new Order();
             OrderServices createOrder = new OrderServices();
-            int lastOrderId=createOrder.registerOrder(restaurantId, user.getUserName());
-            
-            createOrder.orderItems(lastOrderId, (ArrayList) sessionMap.get("Cart"));
-            
+            int lastOrderId = createOrder.registerOrder(restaurantId, user.getUserName());
+            ArrayList viewCart = new ArrayList<Menu>();
+            HashMap productInCart = (HashMap) sessionMap.get("Cart");
+            Iterator<Map.Entry<Integer, Menu>> itr = productInCart.entrySet().iterator();
+            while (itr.hasNext()) {
+                Map.Entry<Integer, Menu> entry = itr.next();
+                viewCart.add(entry.getValue());
+            }
+
+            createOrder.orderItems(lastOrderId, viewCart);
+
             setCtr(getReservationServices().makeReservation(restaurantId, restaurantName,
                     user.getUserName(), getCustomerName(), getBookingDate(), getBookedTable(), getPerson(), lastOrderId, getEmail(), getPhoneNumber()));
             if (getCtr() > 0) {
@@ -211,12 +239,13 @@ public class ReservationAction implements SessionAware {
             } else {
                 setMsg("Some error");
             }
+            sessionMap.remove("Cart");
             returnValue = "RESERVED";
-            
+
         } catch (Exception e) {
             e.printStackTrace();
         }
-        
+
         return returnValue;
     }
 
@@ -626,7 +655,7 @@ public class ReservationAction implements SessionAware {
     public void setReservationList(List<Reservations> reservationList) {
         this.reservationList = reservationList;
     }
-    
+
     @Override
     public void setSession(Map<String, Object> map) {
         sessionMap = (SessionMap) map; // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
@@ -729,5 +758,5 @@ public class ReservationAction implements SessionAware {
     public void setSubTotal(double subTotal) {
         this.subTotal = subTotal;
     }
-    
+
 }

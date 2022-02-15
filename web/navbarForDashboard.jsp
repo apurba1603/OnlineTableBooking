@@ -43,7 +43,7 @@
             <!-- Navigation -->
             <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="index.html">Startmin</a>
+                    <a class="navbar-brand" href="index.html">Admin</a>
                 </div>
 
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -58,12 +58,10 @@
                 </ul>
 
                 <ul class="nav navbar-right navbar-top-links">
-                    <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="logout">
-                            Logout<i class="fa fa-sign-out fa-fw"></i>
-                        </a>
+                        <li><a href="logout">Logout <i class="fa fa-sign-out fa-fw"></i></a></li>
                         
-                    </li>
+                        
+                    
                 </ul>
 
 
@@ -92,7 +90,7 @@
                                         <a href="addRestaurant.jsp">Add Restaurant</a>
                                     </li>
                                     <li>
-                                        <a href="addMenu.jsp">Add Menu</a>
+                                        <a href="addItem">Add Menu</a>
                                     </li>
                                 </ul>
                                 <!-- /.nav-second-level -->

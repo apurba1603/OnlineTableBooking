@@ -3,14 +3,14 @@
     Created on : 02-Feb-2022, 12:32:23 pm
     Author     : Apu
 --%>
-
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@taglib prefix="s" uri="/struts-tags"%>
 <%
 response.setHeader("Cache-Control","no-cache"); //HTTP 1.1
 response.setHeader("Pragma","no-cache"); //HTTP 1.0
 response.setDateHeader ("Expires", 0);
 %>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="s" uri="/struts-tags"%>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -145,10 +145,10 @@ response.setDateHeader ("Expires", 0);
                                                                 <div>
                                                                     <div class="d-flex">
                                                                         <div class="one-half">
-                                                                            <h3><s:property value="foodItems"/></h3>
+                                                                            <h3><s:property value="foodItems"/></h3><br>
                                                                         </div>
                                                                         <div class="one-forth">
-                                                                            <span class="price"><h3>₹<s:property value="price"/></h3></span>
+                                                                            <span class="price"><h3>  ₹<s:property value="price"/></h3></span>
                                                                         </div>
                                                                     </div>
                                                                     <p><span>Meat</span>, <span>Potatoes</span>, <span>Rice</span>, <span>Tomatoe</span></p>

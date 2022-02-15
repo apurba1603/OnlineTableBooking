@@ -303,19 +303,19 @@
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label for="">Name</label>
-                                                            <input name="customerName" type="text" class="form-control" value="<s:property value="firstName"></s:property>" required>
+                                                            <input name="customerName" type="text" class="form-control" placeholder="Full Name" value="<s:property value="firstName"></s:property>" required>
                                                             </div>
                                                         </div>
                                                         <div class="col-md-6">
                                                             <div class="form-group">
                                                                 <label for="">Email</label>
-                                                                <input name="email" type="text" class="form-control" value="<s:property value="email"></s:property>">
+                                                                <input name="email" type="text" class="form-control" placeholder="Your Email" value="<s:property value="email"></s:property>">
                                                             </div>
                                                         </div>
                                                         <div class="col-md-6">
                                                             <div class="form-group">
                                                                 <label for="">Phone</label>
-                                                                <input name="phoneNumber" type="text" class="form-control" value="<s:property value="phoneNumber"></s:property>">
+                                                                <input name="phoneNumber" type="text" class="form-control" placeholder="Phone Number" value="<s:property value="phoneNumber"></s:property>">
                                                             </div>
                                                         </div>
                                                         <div class="col-md-6">

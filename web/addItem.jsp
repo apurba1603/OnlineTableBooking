@@ -1,6 +1,6 @@
 <%-- 
-    Document   : addRestaurant
-    Created on : 12-Feb-2022, 11:32:32 am
+    Document   : addItem
+    Created on : 15-Feb-2022, 2:23:30 am
     Author     : Apu
 --%>
 
@@ -89,27 +89,29 @@
                         <div class="col-lg-12">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    Add new restaurants
+                                <s:property value="msg"/>
                                 </div>
                                 <div class="panel-body">
                                     <div class="row">
                                         <div class="col-lg-6">
-                                            <form action="addRestaurant">
+                                            <form action="addItem">
                                                 <div class="form-group">
-                                                    <label>Restaurant Name</label>
-                                                    <input name="restaurantName" class="form-control" placeholder="Restaurant Name" required="">
+                                                
+                                                    <label>Select Restaurant</label>
+                                                    <select class="form-control" name="restaurantName">
+                                                        <s:iterator value="restaurantList">
+                                                        <option ><s:property value="restaurantName" /></option>
+                                                        </s:iterator>
+                                                    </select>
+                                                    
                                                 </div>
                                                 <div class="form-group">
-                                                    <label>Location</label>
-                                                    <input name="location" class="form-control" placeholder="Restaurant Location">
+                                                    <label>foodItems</label>
+                                                    <input name="foodItems" class="form-control" placeholder="foodItems">
                                                 </div>
                                                 <div class="form-group">
-                                                    <label>Restaurant Timings</label>
-                                                    <input name="timings" class="form-control" placeholder="e.g: 11AM–11:20PM">
-                                                </div>
-                                                <div class="form-group">
-                                                    <label>Approx. Cost</label>
-                                                    <input name="approxCost" type="number" min="0" class="form-control" placeholder="Cost for two">
+                                                    <label>Price</label>
+                                                    <input name="price" type="number" min="0" class="form-control" placeholder="Price">
                                                 </div>
                                                 <button type="submit" class="btn btn-default">Submit Button</button>
                                             </form>

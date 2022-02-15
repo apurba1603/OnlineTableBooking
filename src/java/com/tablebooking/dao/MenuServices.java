@@ -20,15 +20,16 @@ import java.util.List;
  */
 public class MenuServices {
     
-     public List showMenu() throws SQLException, Exception {
+     public List showMenu(int restaurantId) throws SQLException, Exception {
         ResultSet rs = null;
         Connection con = null;
         List<Menu> menuList = new ArrayList<>();
         try {
-            String sql = "SELECT * FROM menu;";
+            String sql = "SELECT * FROM menu WHERE restaurantId=?";
             con = ConnectionManager.getConnection();
             System.out.println("Connection is " + con);
             PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, restaurantId);
             rs = ps.executeQuery();
             while (rs.next()) {
 
@@ -73,6 +74,31 @@ public class MenuServices {
         } catch (Exception e) {
             e.printStackTrace();
             return null;
+        } finally {
+            if (con != null) {
+                con.close();
+            }
+        }
+     }
+     
+     public int addItem(int restaurantId, String foodItems, double price) throws SQLException {
+        int i=0;
+        Connection con = null;
+        try {
+            con = ConnectionManager.getConnection();
+            String sql = "INSERT INTO menu (foodItems"
+                    + " , price , restaurantId) VALUES (?,?,?)";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, foodItems);
+            ps.setDouble(2, price);
+            ps.setInt(3,restaurantId);
+            System.out.println("SQL for insert=" + ps);
+            i = ps.executeUpdate();
+            return i;
+        } catch (Exception e) {
+            System.out.println(e);
+            e.printStackTrace();
+            return i;
         } finally {
             if (con != null) {
                 con.close();

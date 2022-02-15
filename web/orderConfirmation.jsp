@@ -54,7 +54,7 @@
         
     </head>
     <body>
-        <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-dark" id="ftco-navbar" style="background-image: url(images/bg_2.jpg);" data-stellar-background-ratio="0.5">
+        <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-dark" id="ftco-navbar"  data-stellar-background-ratio="0.5">
             <div class="container">
                 <div class="overlay"></div>
                 <a class="navbar-brand" href="index.html">Feliciano</a>

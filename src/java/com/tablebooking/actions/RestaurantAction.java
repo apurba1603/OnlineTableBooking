@@ -4,8 +4,10 @@
  */
 package com.tablebooking.actions;
 
+import com.tablebooking.beans.Menu;
 import com.tablebooking.beans.Restaurant;
 import com.tablebooking.beans.User;
+import com.tablebooking.dao.MenuServices;
 import com.tablebooking.dao.ReservationServices;
 import com.tablebooking.dao.RestaurantServices;
 import java.sql.ResultSet;
@@ -35,6 +37,8 @@ public class RestaurantAction implements SessionAware {
     private String submitType;
     private int reservationId;
     private int customerId;
+    private MenuServices menuServices = null;
+    private List<Menu> menuList = null;
     private String bookingDate;
     private String time;
     private int bookedTable;
@@ -128,6 +132,25 @@ public class RestaurantAction implements SessionAware {
         }
 
         return "RESTAURANT";
+    }
+    
+    public String menu() throws Exception {
+        System.out.println("Menu print");
+        setMenuServices(new MenuServices());
+        try {
+            setMenuList(new ArrayList<Menu>());
+            setMenuList(getMenuServices().showMenu((int)sessionMap.get("restaurantId")));
+
+            if (!menuList.isEmpty()) {
+                setNoData(false);
+                System.out.println("setting nodata=false");
+            } else {
+                setNoData(true);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "MENU";
     }
 
     
@@ -527,6 +550,34 @@ public class RestaurantAction implements SessionAware {
      */
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    /**
+     * @return the menuServices
+     */
+    public MenuServices getMenuServices() {
+        return menuServices;
+    }
+
+    /**
+     * @param menuServices the menuServices to set
+     */
+    public void setMenuServices(MenuServices menuServices) {
+        this.menuServices = menuServices;
+    }
+
+    /**
+     * @return the menuList
+     */
+    public List<Menu> getMenuList() {
+        return menuList;
+    }
+
+    /**
+     * @param menuList the menuList to set
+     */
+    public void setMenuList(List<Menu> menuList) {
+        this.menuList = menuList;
     }
 
 }

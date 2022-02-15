@@ -11,6 +11,7 @@ import com.tablebooking.dao.ReservationServices;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+import org.apache.struts2.dispatcher.SessionMap;
 
 /**
  *
@@ -27,6 +28,7 @@ public class MenuAction extends ActionSupport {
     private List<Menu> menuList = null;
     private int ctr=0;
     private String msg;
+    private SessionMap<String, Object> sessionMap;
     
     
     public String menu() throws Exception {
@@ -34,7 +36,7 @@ public class MenuAction extends ActionSupport {
         setMenuServices(new MenuServices());
         try {
             setMenuList(new ArrayList<Menu>());
-            setMenuList(getMenuServices().showMenu());
+            setMenuList(getMenuServices().showMenu((int)sessionMap.get("restaurantId")));
 
             if (!menuList.isEmpty()) {
                 setNoData(false);

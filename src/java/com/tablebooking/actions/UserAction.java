@@ -21,6 +21,7 @@ import org.apache.struts2.ServletActionContext;
  * @author Apu
  */
 public class UserAction implements SessionAware {
+
     private static Logger log = Logger.getLogger(UserAction.class);
     private String userName;
     private String password;
@@ -52,6 +53,7 @@ public class UserAction implements SessionAware {
     private int person;
 
     private String msg = "";
+    private String updateMsg = "";
     private UserServices userServices = null;
     private int ctr = 0;
 
@@ -83,7 +85,7 @@ public class UserAction implements SessionAware {
 
         User validUser = UserServices.validateLoginCredentials(myUser);
         try {
-            System.out.println("Role=" + validUser.isUserRole()) ;
+            System.out.println("Role=" + validUser.isUserRole());
             if (validUser.isValidUser()) {
                 if (validUser.isUserRole()) {
                     reservationServices = new ReservationServices();
@@ -92,20 +94,29 @@ public class UserAction implements SessionAware {
                     setFirstName(validUser.getFirstName());
                     setReservationList(new ArrayList<Reservations>());
                     setReservationList(reservationServices.showAllReservations());
-                    System.out.println("91: "+reservationList);
+                    System.out.println("91: " + reservationList);
                     login = "ADMINLOGIN";
                     System.out.println("ADMINLOGIN");
 
                 } else {
+
+                    System.out.println("line validUser.getFirstName() 100:" + validUser.getFirstName());
                     getSessionMap().put("User", validUser);
                     setUserName(validUser.getUserName());
                     setPassword(validUser.getPassword());
-                    setFirstName(validUser.getFirstName());
-                    setLastName(validUser.getLastName());
-                    setEmail(validUser.getEmail());
-                    setPhoneNumber(validUser.getPhoneNumber());
-                    login = "USERLOGIN";
-                    System.out.println("USERLOGIN");
+
+                    if (validUser.getFirstName() == null) {
+                        setUpdateMsg("Please Update Your Profile First.");
+                        login = "UPDATEPROFILE";
+                    } else {
+                        setFirstName(validUser.getFirstName());
+                        setLastName(validUser.getLastName());
+                        setEmail(validUser.getEmail());
+                        setPhoneNumber(validUser.getPhoneNumber());
+                        login = "USERLOGIN";
+                        System.out.println("USERLOGIN");
+                    }
+
                 }
 
             } else {
@@ -121,16 +132,14 @@ public class UserAction implements SessionAware {
         log.info("This is log4j");
         return login;
     }
-    
+
     public String userProfile() throws Exception {
-        
+
         String valid;
-        
-//        System.out.println("in userProfile "+user.getUserName());
 
         try {
             User user = (User) sessionMap.get("User");
-        System.out.println("user:" + user);
+            System.out.println("user:" + user);
             System.out.println("in try block user:" + user.isValidUser());
             if (user != null && user.isValidUser()) {
                 setUserName(user.getUserName());
@@ -138,6 +147,7 @@ public class UserAction implements SessionAware {
                 setFirstName(user.getFirstName());
                 setLastName(user.getLastName());
                 setEmail(user.getEmail());
+                setAddress(user.getAddress());
                 setPhoneNumber(user.getPhoneNumber());
                 setReservationList(new ArrayList<Reservations>());
                 setReservationServices(new ReservationServices());
@@ -163,7 +173,23 @@ public class UserAction implements SessionAware {
         log.info("This is log4j");
         return valid;
     }
-    
+
+    public String cancelReservation() throws Exception {
+        ReservationServices dao = new ReservationServices();
+        try {
+            int isDeleted = dao.cancelReservation(reservationId);
+            if (isDeleted > 0) {
+                msg = "Record deleted successfully";
+            } else {
+                msg = "Some error";
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        this.userProfile();
+        return "CANCELLED";
+    }
+
     public String showOrders() throws Exception {
         OrderServices orders = new OrderServices();
         setOrderList(orders.showOrders(reservationId));
@@ -247,7 +273,7 @@ public class UserAction implements SessionAware {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
+        this.userProfile();
         return "UPDATE";
     }
 
@@ -688,5 +714,33 @@ public class UserAction implements SessionAware {
      */
     public void setOrderList(List<Menu> orderList) {
         this.orderList = orderList;
+    }
+
+    /**
+     * @return the customerName
+     */
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    /**
+     * @param customerName the customerName to set
+     */
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
+
+    /**
+     * @return the updateMsg
+     */
+    public String getUpdateMsg() {
+        return updateMsg;
+    }
+
+    /**
+     * @param updateMsg the updateMsg to set
+     */
+    public void setUpdateMsg(String updateMsg) {
+        this.updateMsg = updateMsg;
     }
 }

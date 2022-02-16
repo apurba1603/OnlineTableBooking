@@ -3,7 +3,19 @@
     Created on : 02-Feb-2022, 4:15:09 pm
     Author     : Apu
 --%>
+<%
+response.setHeader("Cache-Control","no-cache"); //HTTP 1.1
+response.setHeader("Pragma","no-cache"); //HTTP 1.0
+response.setDateHeader ("Expires", 0);
+%>
+<%
+    if (request.getSession().getAttribute("User") == null) {
+        String errorMsg = "You are not logged in. Please login first!!";
+        request.setAttribute("ErrorMsg", errorMsg);
+        request.getRequestDispatcher("login.jsp").forward(request, response);
+    }
 
+%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="s" uri="/struts-tags"%>
 <!DOCTYPE html>

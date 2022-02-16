@@ -5,9 +5,17 @@
 --%>
 
 <%
-    response.setHeader("Cache-Control", "no-cache"); //HTTP 1.1
-    response.setHeader("Pragma", "no-cache"); //HTTP 1.0
-    response.setDateHeader("Expires", 0);
+response.setHeader("Cache-Control","no-cache"); //HTTP 1.1
+response.setHeader("Pragma","no-cache"); //HTTP 1.0
+response.setDateHeader ("Expires", 0);
+%>
+<%
+    if (request.getSession().getAttribute("User") == null) {
+        String errorMsg = "You are not logged in. Please login first!!";
+        request.setAttribute("ErrorMsg", errorMsg);
+        request.getRequestDispatcher("login.jsp").forward(request, response);
+    }
+
 %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="s" uri="/struts-tags"%>
@@ -93,7 +101,7 @@
                             <li class="nav-item active"><a href="index" class="nav-link">Home</a></li>
                             <li  class="nav-item" id="profile"  ><a   href="profile" class="nav-link">Profile </a></li>
                             <li style="display: block"  class="nav-item" id="login" value="logout" name="login" ><a  href="logout" class="nav-link">Logout</a></li>
-                            <li class="nav-item cta"><a onclick="showCartValue()" id="viewCart" name="viewCart" href="viewCart" class="nav-link">View Cart  | <span id="result"></span></a></li>
+                            <li class="nav-item cta"><a onclick="showCartValue()" id="viewCart" name="viewCart" href="viewCart" class="nav-link"><i  class="fa" style="font-size:28px">&#xf07a; <span id="result"</span></i></span></a></li>
 
                         </ul>
                     </div>

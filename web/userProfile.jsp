@@ -7,6 +7,11 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="s" uri="/struts-tags"%>
 <%
+response.setHeader("Cache-Control","no-cache"); //HTTP 1.1
+response.setHeader("Pragma","no-cache"); //HTTP 1.0
+response.setDateHeader ("Expires", 0);
+%>
+<%
     if (request.getSession().getAttribute("User") == null) {
         String errorMsg = "You are not logged in. Please login first!!";
         request.setAttribute("ErrorMsg", errorMsg);
@@ -129,17 +134,17 @@
                                                     <tr>
                                                         <th width="30%">Address</th>
                                                         <td width="2%">:</td>
-                                                        <td>125</td>
+                                                        <td><s:property value="address"/></td>
                                                     </tr>
                                                     <tr>
                                                         <th width="30%">Date of Birth	</th>
                                                         <td width="2%">:</td>
-                                                        <td>2020</td>
+                                                        <td><s:property value="dob"/></td>
                                                     </tr>
                                                     <tr>
                                                         <th width="30%">Gender</th>
                                                         <td width="2%">:</td>
-                                                        <td>Male</td>
+                                                        <td></td>
                                                     </tr>
                                                 </table>
                                             </div>

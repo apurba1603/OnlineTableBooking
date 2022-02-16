@@ -194,7 +194,7 @@ public class UserServices {
                 user.setFirstName(rs.getString("firstName"));
                 user.setLastName(rs.getString("lastName"));
                 user.setDob(rs.getString("dob"));
-                user.setDob(rs.getString("address"));
+                user.setAddress(rs.getString("address"));
                 user.setEmail(rs.getString("email"));
                 user.setPhoneNumber(rs.getString("phoneNumber"));
                 user.setStatus(true);

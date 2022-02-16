@@ -84,6 +84,7 @@ public class UserAction implements SessionAware {
         myUser.setPassword(getPassword());
 
         User validUser = UserServices.validateLoginCredentials(myUser);
+        getSessionMap().put("User", validUser);
         try {
             System.out.println("Role=" + validUser.isUserRole());
             if (validUser.isValidUser()) {
@@ -101,7 +102,7 @@ public class UserAction implements SessionAware {
                 } else {
 
                     System.out.println("line validUser.getFirstName() 100:" + validUser.getFirstName());
-                    getSessionMap().put("User", validUser);
+                    
                     setUserName(validUser.getUserName());
                     setPassword(validUser.getPassword());
 
@@ -148,6 +149,9 @@ public class UserAction implements SessionAware {
                 setLastName(user.getLastName());
                 setEmail(user.getEmail());
                 setAddress(user.getAddress());
+                setDob(user.getDob());
+                System.out.println("Address"+address);
+                System.out.println("DOB"+dob);
                 setPhoneNumber(user.getPhoneNumber());
                 setReservationList(new ArrayList<Reservations>());
                 setReservationServices(new ReservationServices());

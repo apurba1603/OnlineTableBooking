@@ -20,16 +20,16 @@
              <span style="color: green;">${sessionScope.ErrorMsg}</span>
              
                     <label for="chk" aria-hidden="true">Login</label>
-                    <input type="text" name="userName" placeholder="UserName" required="">
-                    <input type="password" name="password" placeholder="Password" required="">
+                    <input autocomplete="off" type="text" name="userName" placeholder="UserName" required="">
+                    <input autocomplete="off" type="password" name="password" placeholder="Password" required="">
                     <button type="submit">Login</button>
                 </form>
             </div> <div class="login">
                 <form action="registerUser" method="post">
                     <label for="chk" aria-hidden="true">Register User</label>
-                    <input type="text" name="userName" placeholder="User name" required="">
-                    <input type="text" name="email" placeholder="Email" required="">
-                    <input type="password" name="password" placeholder="Password" required=""><button type="submit">Sign up</button>
+                    <input autocomplete="off" type="text" name="userName" placeholder="User name" required="">
+                    <input autocomplete="off" type="text" name="email" placeholder="Email" required="">
+                    <input autocomplete="off" type="password" name="password" placeholder="Password" required=""><button type="submit">Sign up</button>
                 </form>
               
             </div>

@@ -166,7 +166,7 @@
             }
 
             function notLoggedIn() {
-                alert("you are not logged in")
+                alert("you are not logged in");
             }
 
             function fetchRestaurantId(restaurantId) {
@@ -249,6 +249,7 @@
                                     <div class="text pt-4">
                                         <h3><s:property value="restaurantName" /></h3>
                                         <span class="position mb-2"><s:property value="location" /></span>
+                                        <span class="position mb-2">Cost For Two <s:property value="approxCost" /></span>
                                         <!--<p><a type="button" href="bookTable.action?restaurantId=<s:property value="restaurantId"/>" data-toggle="modal" data-target="#exampleModalCenter"  class="btn btn-primary">Book a table</a></p>-->
                                         <!--<a id="restaurant" onclick"fetchRestaurantId(<s:property value="restaurantId"/>)" ><button data-toggle="modal" data-target="#exampleModalCenter"  class="btn btn-primary">Book a table</button> </a>-->
 
@@ -303,7 +304,7 @@
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label for="">Name</label>
-                                                            <input name="customerName" type="text" class="form-control" placeholder="Full Name" value="<s:property value="firstName"></s:property>" required>
+                                                            <input autocomplete="off" name="customerName" type="text" class="form-control" placeholder="Full Name" value="<s:property value="firstName"></s:property>" required>
                                                             </div>
                                                         </div>
                                                         <div class="col-md-6">

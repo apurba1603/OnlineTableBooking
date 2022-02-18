@@ -27,7 +27,7 @@ response.setDateHeader ("Expires", 0);
             <meta name="description" content="">
             <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
             <meta name="generator" content="Hugo 0.88.1">
-            <title>Products</title>
+            <title>ExaDine Reservations</title>
             <!-- Bootstrap core CSS -->
             <link href="./css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
             <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">

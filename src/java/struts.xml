@@ -46,6 +46,10 @@
             <result  name="CART">/viewCart.jsp</result>
             <result  name="EMPTYCART">/emptyCart.jsp</result>
         </action>
+        <action name="removeItemFromCart" class="com.tablebooking.actions.ReservationAction" method="removeItemFromCart">
+            <result  name="CART">/viewCart.jsp</result>
+            <result  name="EMPTYCART">/emptyCart.jsp</result>
+        </action>
         <action name="profile" class="com.tablebooking.actions.UserAction" method="userProfile">
             <result name="VALID">/userProfile.jsp</result>
             <result name="INVALID">/login.jsp</result>

@@ -21,7 +21,7 @@ response.setDateHeader ("Expires", 0);
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>Feliciano - Free Bootstrap 4 Template by Colorlib</title>
+        <title>ExaDine</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -64,23 +64,23 @@ response.setDateHeader ("Expires", 0);
                 }
             }
 
-            function addProductToCart(productId)
-            {
-                window.location.reload();
-//                var qty = document.getElementById("Quantity_" + pid).value;
-                $.ajax({
-                    url: 'addProductToCart',
-                    method: 'POST',
-                    data: {productId: productId},
-                    success: function (resultText) {
-//                        alert(resultText);
-                        $('#result').html(resultText);
-                    },
-                    error: function (jqXHR, exception) {
-                        console.log('Error occured!!');
-                    }
-                });
-            }
+//            function removeItemFromCart(productId)
+//            {
+////                alert(productId);
+//                $.ajax({
+//                    url: 'removeItemFromCart',
+//                    method: 'POST',
+//                    data: {productId: productId},
+//                    success: function (resultText) {
+////                        $('#result').text(resultText.cart.size());
+//                        
+//                    },
+//                    error: function (jqXHR, exception) {
+//                        console.log('Error occured!!');
+//                    }
+//                });
+//                window.location.reload();
+//            }
 
 
         </script>
@@ -90,7 +90,7 @@ response.setDateHeader ("Expires", 0);
 
             <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
                 <div class="container">
-                    <a class="navbar-brand" href="index.html">Feliciano</a>
+                    <a class="navbar-brand" href="index.html">ExaDine</a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="oi oi-menu"></span> Menu
                     </button>
@@ -163,10 +163,10 @@ response.setDateHeader ("Expires", 0);
                                                     </div>
                                                 </td>
                                                 <td>₹<s:property value="price"/></td>
-                                                <td>
-                                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                <td><a href="removeItemFromCart.action?productId=<s:property value="productId"/>"
+                                                    <button onclick="removeItemFromCart(<s:property value="productId"/>)" type="button" class="close"  aria-label="Close">
                                                         <span aria-hidden="true"><i class="fa fa-close"></i></span>
-                                                    </button>
+                                                    </button></a>
                                                 </td>
                                             </tr>
                                             </s:iterator>

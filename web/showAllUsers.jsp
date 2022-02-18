@@ -27,7 +27,7 @@ response.setDateHeader ("Expires", 0);
             <meta name="description" content="">
             <meta name="author" content="">
 
-            <title>Admin</title>
+            <title>ExaDine Admin</title>
 
             <!-- Bootstrap Core CSS -->
             <link href="adminResources/css/bootstrap.min.css" rel="stylesheet">

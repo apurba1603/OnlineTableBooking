@@ -130,9 +130,8 @@ public String addItem() throws Exception {
         setRestaurantServices(new RestaurantServices());
         System.out.println("line 117");
     setRestaurantList(restaurantServices.showAllRestaurants());
-    System.out.println("addItem: "+restaurantId);
-    System.out.println("addItem: "+restaurantName);
-    restaurantId=restaurantServices.fetchRestaurantId(restaurantName);
+    System.out.println("addItem restaurantId: "+restaurantId);
+    System.out.println("addItem restaurantName: "+restaurantName);
     System.out.println("addItem: "+restaurantId);
     addItem=new MenuServices();
     

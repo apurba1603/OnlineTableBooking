@@ -140,7 +140,7 @@ public class RestaurantAction implements SessionAware {
         try {
             setMenuList(new ArrayList<Menu>());
             setMenuList(getMenuServices().showMenu((int)sessionMap.get("restaurantId")));
-
+            setRestaurantName(((Restaurant)sessionMap.get("restaurant")).getRestaurantName());
             if (!menuList.isEmpty()) {
                 setNoData(false);
                 System.out.println("setting nodata=false");

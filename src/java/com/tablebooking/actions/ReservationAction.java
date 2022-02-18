@@ -155,6 +155,22 @@ public class ReservationAction implements SessionAware {
 
         return cartStatus;
     }
+    
+    
+    public String removeItemFromCart() throws Exception {
+        String cartStatus = "CART";
+        setCart(new ArrayList<Menu>());
+        ArrayList viewCart = new ArrayList<Menu>();
+        HashMap productInCart = (HashMap) sessionMap.get("Cart");
+        productInCart.remove(productId);
+        getSessionMap().put("Cart", productInCart);
+        this.viewCart();
+        if (productInCart.isEmpty()) {
+            cartStatus = "EMPTYCART";
+        }
+        return cartStatus;
+    }
+    
 
     public String showReservations() throws Exception {
         setReservationServices(new ReservationServices());

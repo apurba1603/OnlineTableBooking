@@ -27,7 +27,7 @@ response.setDateHeader ("Expires", 0);
         <meta name="description" content="">
         <meta name="author" content="">
 
-        <title>Admin</title>
+        <title>ExaDine Admin</title>
 
         <!-- Bootstrap Core CSS -->
         <link href="adminResources/css/bootstrap.min.css" rel="stylesheet">
@@ -110,9 +110,9 @@ response.setDateHeader ("Expires", 0);
                                                 <div class="form-group">
                                                 
                                                     <label>Select Restaurant</label>
-                                                    <select class="form-control" name="restaurantName">
+                                                    <select class="form-control" name="restaurantId">
                                                         <s:iterator value="restaurantList">
-                                                        <option ><s:property value="restaurantName" /></option>
+                                                            <option value="<s:property value="restaurantId"/>" ><s:property value="restaurantName" /></option>
                                                         </s:iterator>
                                                     </select>
                                                     

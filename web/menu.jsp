@@ -50,31 +50,28 @@ response.setDateHeader ("Expires", 0);
         <link rel="stylesheet" href="css/style.css">
         <script>
 
-            function showCartValue()
-            {
-                if ("${sessionScope.Cart.size()}" > 0) {
-                    $('#result').html(<s:property value="#session.Cart.size()" />);
-                    
-                }
-                
-            }
 
-            function addProductToCart(productId)
+        function addProductToCart(productId)
             {
+                
                 
                 $.ajax({
+                    
                     url: 'addProductToCart',
                     method: 'POST',
                     data: {productId: productId},
                     success: function (resultText) {
-                        $('#result').text(resultText.cart.size());
-                        
+                        $('#result').html(resultText);
+
                     },
+                
                     error: function (jqXHR, exception) {
                         console.log('Error occured!!');
                     }
                 });
-                window.location.reload();
+                
+//                window.location.reload();
+                
             }
             
             
@@ -97,7 +94,8 @@ response.setDateHeader ("Expires", 0);
                         <li class="nav-item active"><a href="index" class="nav-link">Home</a></li>
                         <li  class="nav-item" id="profile"  ><a   href="profile" class="nav-link">Profile </a></li>
                         <li style="display: block"  class="nav-item" id="login" value="logout" name="login" ><a  href="logout" class="nav-link">Logout</a></li>
-                        <li class="nav-item cta"><a onclick="showCartValue()" id="viewCart" name="viewCart" href="viewCart" class="nav-link"><i  class="fa" style="font-size:28px">&#xf07a; <span id="result"</span></i> <span id="result"></span></a></li>
+                        <li class="nav-item cta"><a onclick="showCartValue()" id="viewCart" name="viewCart" href="viewCart" class="nav-link"><i  class="fa" style="font-size:28px">&#xf07a; </i>
+                                <span id="result"></span></a></li>
 
                     </ul>
                     </div>

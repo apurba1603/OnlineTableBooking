@@ -90,7 +90,7 @@ public class ReservationAction implements SessionAware {
     }
 
     public String addProductToCart() throws IOException {
-        System.out.println("Cart: " + productId);
+        System.out.println("Cart item: " + productId);
         MenuServices item = new MenuServices();
         if (sessionMap.get("Cart") == null) {
 //            ArrayList productInCart = new ArrayList<Menu>();
@@ -100,7 +100,9 @@ public class ReservationAction implements SessionAware {
                 Menu product = item.fetchProduct(productId);
 //                productInCart.add(product);
                 cart.put(productId, product);
+                setCartSize(cart.size());
                 getSessionMap().put("Cart", cart);
+                getSessionMap().put("CartSize", cartSize);
             } catch (Exception ex) {
                 Logger.getLogger(ReservationAction.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -110,17 +112,18 @@ public class ReservationAction implements SessionAware {
             try {
                 Menu product = item.fetchProduct(productId);
                 cart.put(productId, product);
+                setCartSize(cart.size());
                 getSessionMap().put("Cart", cart);
+                getSessionMap().put("CartSize", cart.size());
             } catch (Exception ex) {
                 Logger.getLogger(ReservationAction.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         HashMap cart = (HashMap) sessionMap.get("Cart");
-        PrintWriter out = ServletActionContext.getResponse().getWriter();
-        out.println(cart.size());
         System.out.println("Items in cart=" + cart.size());
         System.out.println("Cart:111 " + sessionMap.get("Cart") + cart.size());
         System.out.println("Cart:123 cart size: " + cart.size());
+        
         return "cart";
     }
 
@@ -164,6 +167,8 @@ public class ReservationAction implements SessionAware {
         HashMap productInCart = (HashMap) sessionMap.get("Cart");
         productInCart.remove(productId);
         getSessionMap().put("Cart", productInCart);
+        getSessionMap().put("CartSize", productInCart.size());
+        setCartSize(productInCart.size());
         this.viewCart();
         if (productInCart.isEmpty()) {
             cartStatus = "EMPTYCART";
@@ -171,8 +176,25 @@ public class ReservationAction implements SessionAware {
         return cartStatus;
     }
     
-
+    
     public String showReservations() throws Exception {
+        setReservationServices(new ReservationServices());
+        try {
+
+            if (!reservationList.isEmpty()) {
+                setNoData(false);
+                System.out.println("Reservationt retrieve = " + getReservationList().size());
+                System.out.println("setting nodata=false");
+            } else {
+                setNoData(true);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "RESERVATIONS";
+    }
+    
+    public String cartQuantity() throws Exception {
         setReservationServices(new ReservationServices());
         try {
 

@@ -100,7 +100,8 @@ response.setDateHeader ("Expires", 0);
                             <li class="nav-item active"><a href="index" class="nav-link">Home</a></li>
                             <li  class="nav-item" id="profile"  ><a   href="profile" class="nav-link">Profile </a></li>
                             <li style="display: block"  class="nav-item" id="login" value="logout" name="login" ><a  href="logout" class="nav-link">Logout</a></li>
-                            <li class="nav-item cta"><a onclick="showCartValue()" id="viewCart" name="viewCart" href="viewCart" class="nav-link"><i  class="fa" style="font-size:28px">&#xf07a; <span id="result"</span></i></span></a></li>
+                            <li class="nav-item cta"><a onclick="showCartValue()" id="viewCart" name="viewCart" href="viewCart" class="nav-link"><i  class="fa" style="font-size:28px">&#xf07a;</i>
+                                    <span id="result"></span></a></li>
 
                         </ul>
                     </div>
@@ -159,7 +160,7 @@ response.setDateHeader ("Expires", 0);
                                                 <td>₹<s:property value="price"/></td>
                                                 <td class="quantity">
                                                     <div class="input-group">
-                                                        <input type="text" name="quantity" class="quantity form-control input-number" value="1" min="1" max="10">
+                                                        <input type="text" name="quantity" class="quantity form-control input-number" id='quantity_<s:property value="productId"/>' value="1" min="1" max="10">
                                                     </div>
                                                 </td>
                                                 <td>₹<s:property value="price"/></td>

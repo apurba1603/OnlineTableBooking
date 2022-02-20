@@ -111,6 +111,12 @@
             }
         </style>
         <title>ExaDine</title>
+
+
+        <meta name="google-signin-client_id" content="712965236037-igrai07uhkr7505kguf3sper1ae6h5u1.apps.googleusercontent.com">
+        <meta name="google-signin-scope" content="profile email">
+        <script src="https://apis.google.com/js/platform.js" async defer></script>
+
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -186,7 +192,14 @@
         </script>
     </head>
     <body>
-
+        <script>
+            function signOut() {
+                var auth2 = gapi.auth2.getAuthInstance();
+                auth2.signOut().then(function () {
+                });
+                auth2.disconnect();
+            }
+        </script>
         <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
             <div class="container">
                 <a class="navbar-brand" href="index.html">ExaDine</a>
@@ -200,7 +213,7 @@
                             if (request.getSession().getAttribute("User") != null) {%> 
 
                         <li  class="nav-item" id="profile"  ><a   href="profile" class="nav-link">Profile </a></li>
-                        <li style="display: block"  class="nav-item" id="login" value="logout" name="login" ><a  href="logout" class="nav-link">Logout</a></li>
+                        <li style="display: block"  class="nav-item" id="login" value="logout" name="login" ><a href="#" onclick="signOut();"   class="nav-link">Logout</a></li>
 
                         <% } %>
 

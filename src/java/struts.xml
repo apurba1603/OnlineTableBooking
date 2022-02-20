@@ -39,6 +39,9 @@
         <action name="addProductToCart" class="com.tablebooking.actions.ReservationAction" method="addProductToCart">
             <result name="cart" >/orderConfirmation.jsp</result>
         </action>
+        <action name="addProductToCart" class="com.tablebooking.actions.ReservationAction" method="addProductToCart">
+            <result name="cart" >/viewCounter.jsp</result>
+        </action>
         <action name="reservations" class="com.tablebooking.actions.AdminActions" method="showAllReservations">
             <result  name="RESERVATIONS">/showAllReservations.jsp</result>
         </action>
@@ -68,6 +71,12 @@
         </action>
         <action name="registerUser" class="com.tablebooking.actions.UserAction" method="registerUser">
             <result name="REGISTER">/login.jsp</result>
+        </action>
+        <action name="registerGoogleUser" class="com.tablebooking.actions.UserAction" method="registerGoogleUser">
+            <result name="ADMINLOGIN">/adminPanel.jsp</result>
+            <result name="UPDATEPROFILE">/updateProfile.jsp</result>
+            <result name="USERLOGIN" type="chain">/index</result>
+            <result name="LOGINFAILED">/login.jsp</result>
         </action>
         <action name="showOrders" class="com.tablebooking.actions.UserAction" method="showOrders">
             <result name="VALID">/userProfile.jsp</result>

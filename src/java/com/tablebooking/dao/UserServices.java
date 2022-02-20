@@ -44,6 +44,83 @@ public class UserServices {
 
     }
 
+    public User registerGoogleUser(String email, String firstName, String lastName) throws Exception {
+        ResultSet rs = null;
+        User user = this.fetchGoogleUserDetails(email);
+        int i = 0;
+        Connection con = null;
+        String userName = email;
+
+        try {
+            if (user==null) {
+
+                 con = ConnectionManager.getConnection();
+                    String sql = "INSERT INTO users (userName, firstName, lastName, email) VALUES (?,?,?,?)";
+                    PreparedStatement ps = con.prepareStatement(sql);
+                    ps.setString(1, email);
+                    ps.setString(2, firstName);
+                    ps.setString(3, lastName);
+                    ps.setString(4, email);
+                    System.out.println("SQL for insert=" + ps);
+                    i = ps.executeUpdate();
+                    user = this.fetchGoogleUserDetails(email);
+                     
+            }
+            
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (con != null) {
+                con.close();
+            }
+        }
+        return user;
+    }
+
+    public User fetchGoogleUserDetails(String userName) throws SQLException, Exception {
+        ResultSet rs = null;
+        Connection con = null;
+        User user = null;
+
+        try {
+
+            con = ConnectionManager.getConnection();
+            String sql = "SELECT * FROM users WHERE userName= ? AND status= 1;";
+            PreparedStatement ps = con.prepareStatement(sql);
+            System.out.println("userName = " + userName);
+            ps.setString(1, userName);
+            System.out.println("Select SQL = " + ps);
+
+            rs = ps.executeQuery();
+
+            if (rs.next()) {
+
+                user = new User();
+                user.setUserName(rs.getString("userName"));
+                user.setPassword(rs.getString("password"));
+                user.setFirstName(rs.getString("firstName"));
+                user.setLastName(rs.getString("lastName"));
+                user.setDob(rs.getString("dob"));
+                user.setAddress(rs.getString("address"));
+                user.setEmail(rs.getString("email"));
+                user.setPhoneNumber(rs.getString("phoneNumber"));
+                user.setStatus(true);
+                user.setValidUser(true);
+                user.setUserRole(rs.getBoolean("userRole"));
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+
+        } finally {
+            if (con != null) {
+                con.close();
+            }
+        }
+        return user;
+    }
+
     public List report() throws SQLException, Exception {
         ResultSet rs = null;
         Connection con = null;
@@ -115,7 +192,7 @@ public class UserServices {
         }
     }
 
-    public int updateUserDetails(String userName,String dob, String password, String firstName, String lastName,
+    public int updateUserDetails(String userName, String dob, String password, String firstName, String lastName,
             String address, String phoneNumber) throws SQLException, Exception {
 
         Connection con = ConnectionManager.getConnection();
@@ -199,7 +276,7 @@ public class UserServices {
                 user.setPhoneNumber(rs.getString("phoneNumber"));
                 user.setStatus(true);
                 user.setValidUser(true);
-                 user.setUserRole(rs.getBoolean("userRole"));
+                user.setUserRole(rs.getBoolean("userRole"));
             }
 
         } catch (Exception e) {

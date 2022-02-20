@@ -46,10 +46,12 @@ public class UserAction implements SessionAware {
     private int restaurantId;
     private int customerId;
     private String customerName;
+    private String fullName;
     private int bookedTable;
     private int orderId;
     private String bookingDate;
     private String restaurantName;
+    private String id_token;
     private int person;
 
     private String msg = "";
@@ -74,6 +76,26 @@ public class UserAction implements SessionAware {
         }
         log.info("This is log for registerUser() method");
         return "REGISTER";
+    }
+
+    public String registerGoogleUser() throws Exception {
+        setUserServices(new UserServices());
+        System.out.println("fullName"+getFullName());
+        String nameArray[] = getFullName().split(" ");
+        if(nameArray.length>1){
+            setFirstName(nameArray[0]);
+            setLastName(nameArray[1]);
+        }
+        System.out.println("setLastName: "+lastName);
+        try {
+            setUser(getUserServices().registerGoogleUser(email, firstName, lastName));
+            getSessionMap().put("User", user);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        log.info("This is log for registerUser() method");
+        return "USERLOGIN";
+        
     }
 
     public String userLogin() throws Exception {
@@ -102,7 +124,7 @@ public class UserAction implements SessionAware {
                 } else {
 
                     System.out.println("line validUser.getFirstName() 100:" + validUser.getFirstName());
-                    
+
                     setUserName(validUser.getUserName());
                     setPassword(validUser.getPassword());
 
@@ -150,8 +172,8 @@ public class UserAction implements SessionAware {
                 setEmail(user.getEmail());
                 setAddress(user.getAddress());
                 setDob(user.getDob());
-                System.out.println("Address"+address);
-                System.out.println("DOB"+dob);
+                System.out.println("Address" + address);
+                System.out.println("DOB" + dob);
                 setPhoneNumber(user.getPhoneNumber());
                 setReservationList(new ArrayList<Reservations>());
                 setReservationServices(new ReservationServices());
@@ -746,5 +768,33 @@ public class UserAction implements SessionAware {
      */
     public void setUpdateMsg(String updateMsg) {
         this.updateMsg = updateMsg;
+    }
+
+    /**
+     * @return the id_token
+     */
+    public String getId_token() {
+        return id_token;
+    }
+
+    /**
+     * @param id_token the id_token to set
+     */
+    public void setId_token(String id_token) {
+        this.id_token = id_token;
+    }
+
+    /**
+     * @return the fullName
+     */
+    public String getFullName() {
+        return fullName;
+    }
+
+    /**
+     * @param fullName the fullName to set
+     */
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 }

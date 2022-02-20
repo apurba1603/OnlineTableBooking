@@ -49,6 +49,10 @@
             <result  name="CART">/viewCart.jsp</result>
             <result  name="EMPTYCART">/emptyCart.jsp</result>
         </action>
+        <action name="itemQuantity" class="com.tablebooking.actions.ReservationAction" method="itemQuantity">
+            <result  name="CART">/viewCart.jsp</result>
+            <result  name="EMPTYCART">/emptyCart.jsp</result>
+        </action>
         <action name="removeItemFromCart" class="com.tablebooking.actions.ReservationAction" method="removeItemFromCart">
             <result  name="CART">/viewCart.jsp</result>
             <result  name="EMPTYCART">/emptyCart.jsp</result>

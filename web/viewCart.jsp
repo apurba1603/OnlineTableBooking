@@ -63,6 +63,29 @@ response.setDateHeader ("Expires", 0);
 
                 }
             }
+            
+            function itemQuantity(productId)
+            {
+//                alert(productId);
+                var quantity = document.getElementById("quantity_" + productId).value;
+                if(quantity>0){
+                    $.ajax({
+                    url: 'itemQuantity',
+                    method: 'POST',
+                    data: {productId: productId, quantity: quantity},
+                    success: function (resultText) {
+                        $('#result').text(resultText.cart.size());
+                        
+                    },
+                    error: function (jqXHR, exception) {
+                        console.log('Error occured!!');
+                    }
+                });
+                window.location.reload();
+                }
+                
+            }
+            
 
 //            function removeItemFromCart(productId)
 //            {
@@ -84,6 +107,7 @@ response.setDateHeader ("Expires", 0);
 
 
         </script>
+        
     </head>
     <body onload="showCartValue()">
         <div class="py-1 bg-black top">
@@ -160,10 +184,10 @@ response.setDateHeader ("Expires", 0);
                                                 <td>₹<s:property value="price"/></td>
                                                 <td class="quantity">
                                                     <div class="input-group">
-                                                        <input type="text" name="quantity" class="quantity form-control input-number" id='quantity_<s:property value="productId"/>' value="1" min="1" max="10">
+                                                        <input type="text" onkeyup="itemQuantity(<s:property value="productId"/>)" name="quantity" class="quantity form-control input-number" id='quantity_<s:property value="productId"/>' value="<s:property value="quantity"/>" min="1" max="10">
                                                     </div>
                                                 </td>
-                                                <td>₹<s:property value="price"/></td>
+                                                <td>₹<s:property value="itemTotal"/></td>
                                                 <td><a href="removeItemFromCart.action?productId=<s:property value="productId"/>"
                                                     <button onclick="removeItemFromCart(<s:property value="productId"/>)" type="button" class="close"  aria-label="Close">
                                                         <span aria-hidden="true"><i class="fa fa-close"></i></span>

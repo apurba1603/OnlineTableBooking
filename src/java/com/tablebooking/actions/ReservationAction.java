@@ -46,6 +46,7 @@ public class ReservationAction implements SessionAware {
     private int customerId;
     private String bookingDate;
     private double subTotal;
+    private double itemTotal;
     private String time;
     private int bookedTable;
     private int orderId;
@@ -93,13 +94,11 @@ public class ReservationAction implements SessionAware {
         System.out.println("Cart item: " + productId);
         MenuServices item = new MenuServices();
         if (sessionMap.get("Cart") == null) {
-//            ArrayList productInCart = new ArrayList<Menu>();
-            HashMap<Integer, Menu> cart = new HashMap<>();
+            HashMap<Integer, Integer> cart = new HashMap<>();
 
             try {
                 Menu product = item.fetchProduct(productId);
-//                productInCart.add(product);
-                cart.put(productId, product);
+                cart.put(productId, 1);
                 setCartSize(cart.size());
                 getSessionMap().put("Cart", cart);
                 getSessionMap().put("CartSize", cartSize);
@@ -111,7 +110,7 @@ public class ReservationAction implements SessionAware {
             HashMap cart = (HashMap) sessionMap.get("Cart");
             try {
                 Menu product = item.fetchProduct(productId);
-                cart.put(productId, product);
+                cart.put(productId, 1);
                 setCartSize(cart.size());
                 getSessionMap().put("Cart", cart);
                 getSessionMap().put("CartSize", cart.size());
@@ -126,28 +125,67 @@ public class ReservationAction implements SessionAware {
         
         return "cart";
     }
-
-    public String viewCart() throws Exception {
+    
+    public String itemQuantity() throws Exception {
+        MenuServices item = new MenuServices();
         String cartStatus = "EMPTYCART";
         setCart(new ArrayList<Menu>());
         ArrayList viewCart = new ArrayList<Menu>();
-        HashMap productInCart = (HashMap) sessionMap.get("Cart");
+        HashMap<Integer, Integer> productInCart = (HashMap) sessionMap.get("Cart");
+        productInCart.put(productId, quantity);
+        sessionMap.put("Cart", productInCart);
+        
         if (productInCart != null) {
 
             try {
-                Iterator<Map.Entry<Integer, Menu>> itr = productInCart.entrySet().iterator();
-                while (itr.hasNext()) {
-                    Map.Entry<Integer, Menu> entry = itr.next();
-                    viewCart.add(entry.getValue());
+                
+                    Menu product = item.fetchProduct(productId);
+                    setItemTotal(product.getPrice()*quantity);
+                    
+                for (int productId: productInCart.keySet()) {
+                    setQuantity(productInCart.get(productId));
+                    product = item.fetchProduct(productId);
+                    System.out.println("product.getPrice()*quantity: "+product.getPrice()+" qty: "+quantity);
+                    subTotal += product.getPrice()*quantity;
+                    product.setItemTotal(product.getPrice()*quantity);
+                    product.setQuantity(quantity);
+                    viewCart.add(product);
                 }
+                
+                
 
-                setCart(viewCart);
-                int i = 0;
-                while (i < cart.size()) {
-                    Menu product = (Menu) cart.get(i);
-                    subTotal += product.getPrice();
-                    i++;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            sessionMap.put("Total", subTotal);
+            cartStatus = "CART";
+        }
+
+        return cartStatus;
+    }
+
+    public String viewCart() throws Exception {
+        MenuServices item = new MenuServices();
+        String cartStatus = "EMPTYCART";
+        setCart(new ArrayList<Menu>());
+        ArrayList viewCart = new ArrayList<Menu>();
+        HashMap<Integer, Integer> productInCart = (HashMap) sessionMap.get("Cart");
+        if (productInCart != null) {
+
+            try {
+                for (int productId: productInCart.keySet()) {
+                    setQuantity(productInCart.get(productId));
+                    Menu product = item.fetchProduct(productId);
+                    System.out.println("product.getPrice()*quantity: "+product.getPrice()+" qty: "+quantity);
+                    subTotal += product.getPrice()*quantity;
+                    product.setItemTotal(product.getPrice()*quantity);
+                    product.setQuantity(quantity);
+                    viewCart.add(product);
                 }
+                
+                
+                setCart(viewCart);
+                
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -194,22 +232,7 @@ public class ReservationAction implements SessionAware {
         return "RESERVATIONS";
     }
     
-    public String cartQuantity() throws Exception {
-        setReservationServices(new ReservationServices());
-        try {
-
-            if (!reservationList.isEmpty()) {
-                setNoData(false);
-                System.out.println("Reservationt retrieve = " + getReservationList().size());
-                System.out.println("setting nodata=false");
-            } else {
-                setNoData(true);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return "RESERVATIONS";
-    }
+    
 
     public String reservation() throws Exception {
         System.out.println("reservation()");
@@ -266,12 +289,17 @@ public class ReservationAction implements SessionAware {
             OrderServices createOrder = new OrderServices();
             int lastOrderId = createOrder.registerOrder(restaurantId, user.getUserName());
             ArrayList viewCart = new ArrayList<Menu>();
-            HashMap productInCart = (HashMap) sessionMap.get("Cart");
-            Iterator<Map.Entry<Integer, Menu>> itr = productInCart.entrySet().iterator();
-            while (itr.hasNext()) {
-                Map.Entry<Integer, Menu> entry = itr.next();
-                viewCart.add(entry.getValue());
-            }
+            HashMap<Integer, Integer> productInCart = (HashMap) sessionMap.get("Cart");
+            MenuServices item = new MenuServices();
+                for (int productId: productInCart.keySet()) {
+                    setQuantity(productInCart.get(productId));
+                    Menu product = item.fetchProduct(productId);
+                    System.out.println("product.getPrice()*quantity: "+product.getPrice()+" qty: "+quantity);
+                    subTotal += product.getPrice()*quantity;
+                    product.setItemTotal(product.getPrice()*quantity);
+                    product.setQuantity(quantity);
+                    viewCart.add(product);
+                }
 
             createOrder.orderItems(lastOrderId, viewCart);
 
@@ -815,6 +843,20 @@ public class ReservationAction implements SessionAware {
      */
     public void setTotal(Double total) {
         this.total = total;
+    }
+
+    /**
+     * @return the itemTotal
+     */
+    public double getItemTotal() {
+        return itemTotal;
+    }
+
+    /**
+     * @param itemTotal the itemTotal to set
+     */
+    public void setItemTotal(double itemTotal) {
+        this.itemTotal = itemTotal;
     }
 
 }

@@ -13,6 +13,8 @@ public class Menu {
     private int productId;
     private String foodItems;
     private Double price;
+    private int quantity;
+    private double itemTotal;
 
     /**
      * @return the foodItems
@@ -54,6 +56,34 @@ public class Menu {
      */
     public void setProductId(int productId) {
         this.productId = productId;
+    }
+
+    /**
+     * @return the quantity
+     */
+    public int getQuantity() {
+        return quantity;
+    }
+
+    /**
+     * @param quantity the quantity to set
+     */
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    /**
+     * @return the itemTotal
+     */
+    public double getItemTotal() {
+        return itemTotal;
+    }
+
+    /**
+     * @param itemTotal the itemTotal to set
+     */
+    public void setItemTotal(double itemTotal) {
+        this.itemTotal = itemTotal;
     }
     
 }

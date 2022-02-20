@@ -65,11 +65,13 @@ public class OrderServices {
                 Menu product = (Menu) cart.get(i);
                 con = ConnectionManager.getConnection();
                 String sql = "INSERT INTO itemsordered\n"
-                        + "VALUES(?,?,?);";
+                        + "VALUES(?,?,?,?,?);";
                 PreparedStatement ps = con.prepareStatement(sql);
                 ps.setInt(1, orderId);
                 ps.setInt(2, product.getProductId());
                 ps.setString(3, product.getFoodItems());
+                ps.setInt(4, product.getQuantity());
+                ps.setDouble(5, product.getItemTotal());
                 System.out.println("orderItems: " + ps);
                 j=ps.executeUpdate();
                 

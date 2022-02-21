@@ -9,7 +9,7 @@
             <result name="RESTAURANTS">/index.jsp</result>
         </action>
         <action name="bookTable" class="com.tablebooking.actions.RestaurantAction" method="bookTable">
-            <result name="RESTAURANT">/reservationForm.jsp</result>
+            <result name="RESTAURANT">/index.jsp</result>
         </action>
         <action name="bookTableAndOrder" class="com.tablebooking.actions.RestaurantAction" method="bookTableAndOrder">
             <result name="RESTAURANT">/reservationForm.jsp</result>
@@ -50,7 +50,7 @@
             <result  name="EMPTYCART">/emptyCart.jsp</result>
         </action>
         <action name="itemQuantity" class="com.tablebooking.actions.ReservationAction" method="itemQuantity">
-            <result  name="CART">/viewCart.jsp</result>
+            <result  name="CART">/itemTotal.jsp</result>
             <result  name="EMPTYCART">/emptyCart.jsp</result>
         </action>
         <action name="removeItemFromCart" class="com.tablebooking.actions.ReservationAction" method="removeItemFromCart">
@@ -61,8 +61,8 @@
             <result name="VALID">/userProfile.jsp</result>
             <result name="INVALID">/login.jsp</result>
         </action>
-        <action name="updateProfileForm" >
-            <result  >/updateProfile.jsp</result>
+        <action name="updateProfileForm" class="com.tablebooking.actions.UserAction" method="updateUserForm">
+            <result name="FORM">/updateProfile.jsp</result>
         </action>
         <action name="updateProfile" class="com.tablebooking.actions.UserAction" method="updateUser">
             <result name="UPDATE" >/userProfile.jsp</result>

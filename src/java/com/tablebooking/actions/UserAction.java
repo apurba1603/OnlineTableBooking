@@ -55,7 +55,7 @@ public class UserAction implements SessionAware {
     private int person;
 
     private String msg = "";
-    private String updateMsg = "";
+    private String updateMsg = "Update Profile";
     private UserServices userServices = null;
     private int ctr = 0;
 
@@ -301,6 +301,21 @@ public class UserAction implements SessionAware {
         }
         this.userProfile();
         return "UPDATE";
+    }
+    
+    public String updateUserForm() throws Exception {
+        UserServices dao = new UserServices();
+        User user = (User) sessionMap.get("User");
+        System.out.println("Update user form");
+        setUserName(user.getUserName());
+        setPassword(user.getPassword());
+        setFirstName(user.getFirstName());
+        setLastName(user.getLastName());
+        setAddress(user.getAddress());
+        setDob(user.getDob());
+        setEmail(user.getEmail());
+        setPhoneNumber(user.getPhoneNumber());
+        return "FORM";
     }
 
     /**

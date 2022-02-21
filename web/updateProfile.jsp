@@ -48,7 +48,9 @@ response.setDateHeader ("Expires", 0);
         <link rel="stylesheet" href="css/style.css">
     </head>
     <body>
+        <div class="py-1 bg-black top">
 
+        </div>
         <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
             <div class="container">
                 <a class="navbar-brand" href="index.html">ExaDine</a>
@@ -60,7 +62,7 @@ response.setDateHeader ("Expires", 0);
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item active"><a href="index" class="nav-link">Home</a></li>
                         <li  class="nav-item" id="profile"  ><a   href="profile" class="nav-link">Profile </a></li>
-                        <li style="display: block"  class="nav-item" id="login" value="logout" name="login" ><a  href="login" class="nav-link">Logout</a></li>
+                        <li style="display: block"  class="nav-item" id="login" value="logout" name="login" ><a  href="logout" class="nav-link">Logout</a></li>
 
                     </ul>
                 </div>
@@ -74,70 +76,72 @@ response.setDateHeader ("Expires", 0);
                 <div class="row no-gutters slider-text align-items-end justify-content-center">
                     <div class="col-md-9 ftco-animate text-center mb-4">
                         <h1 class="mb-2 bread"><s:property value="updateMsg"/></h1>
-                        <p class="breadcrumbs"><span class="mr-2"><a href="index.html">Profile <i class="ion-ios-arrow-forward"></i></a></span> <span>Update Profile <i class="ion-ios-arrow-forward"></i></span></p>
+                        <p class="breadcrumbs"><span class="mr-2"><a href="index">Profile <i class="ion-ios-arrow-forward"></i></a></span> <span>Update Profile <i class="ion-ios-arrow-forward"></i></span></p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section class="ftco-section img" style="background-image: url(images/bg_3.jpg)" data-stellar-background-ratio="0.5">
-            <div class="container">
-                <div class="row d-flex">
-                    <div class="col-md-7 ftco-animate makereservation p-4 px-md-5 pb-md-5">
-                        <div class="heading-section ftco-animate mb-5 text-center">
-                            <span class="subheading">Profile</span>
-                            <h2 class="mb-4">Update Profile</h2>
-                        </div>
-                        <form action="updateProfile">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="">First Name</label>
-                                        <input autocomplete="off" name="firstName" type="text" class="form-control" placeholder="First Name" required="">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="">Last Name</label>
-                                        <input autocomplete="off" name="lastName" type="text" class="form-control" placeholder="Last Name" required="">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label  for="">Phone</label>
-                                        <input name="phoneNumber" type="text" class="form-control" required="" placeholder="Phone">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="">Date of Birth</label>
-                                        <input autocomplete="off" name="dob" type="text" class="form-control" id="book_date" placeholder="Date">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="">Address</label>
-                                        <input autocomplete="off" name="address" type="text" class="form-control" placeholder="Address" required="">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label  for="">Change Password</label>
-                                        <input autocomplete="off" name="password" type="password" class="form-control" placeholder="New Password" value="<s:property value="password"/>" required="">
-                                    </div>
-                                </div>
-                                <div class="col-md-12 mt-3">
-                                    <div class="form-group text-center">
-                                        <input name="submitType" type="submit" value="Update" class="btn btn-primary py-3 px-5">
-                                    </div>
-                                </div>
+        <section class="ftco-section ftco-no-pt ftco-no-pb">
+            <div class="container-fluid px-0">
+                <div class="row d-flex no-gutters">
+                    <div class="col-md-6 order-md-last ftco-animate makereservation p-4 p-md-5 pt-5">
+                        <div class="py-md-5">
+                            <div class="heading-section ftco-animate mb-5">
+                                <span class="subheading">Profile</span>
+                                <h2 class="mb-4">Update Profile</h2>
                             </div>
-                        </form>
+                            <form action="updateProfile" method="post">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="">First Name</label>
+                                            <input name="firstName" type="text" class="form-control" value="<s:property value="firstName"/>" placeholder="First Name" >
+                                            </div>
+                                        </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="">Last Name</label>
+                                            <input name="lastName" type="text" class="form-control" value="<s:property value="lastName"/>" placeholder="Last Name" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="">Phone Number</label>
+                                                <input name="phoneNumber" type="text" class="form-control" value="<s:property value="phoneNumber"/>" placeholder="Phone Number">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="">Date of Birth</label>
+                                            <input autocomplete="off" name="dob" type="text" class="form-control" id="book_date" value="<s:property value="dob"/>"  placeholder="Date of Birth">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="">Address</label>
+                                            <input autocomplete="off" name="address" type="text" class="form-control" value="<s:property value="address"/>" placeholder="Address" required>
+                                            </div>
+                                        </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="">Change Password</label>
+                                            <input name="password" type="password" class="form-control" value="<s:property value="password"/>" placeholder="Password" required>
+                                            </div>
+                                        </div>
+                                    
+                                    <div class="col-md-12 mt-3">
+                                        <div class="form-group">
+                                            <input type="submit" value="Update Profile" class="btn btn-primary py-3 px-5">
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
-
 
 
 

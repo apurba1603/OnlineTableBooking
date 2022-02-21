@@ -213,7 +213,7 @@
                             if (request.getSession().getAttribute("User") != null) {%> 
 
                         <li  class="nav-item" id="profile"  ><a   href="profile" class="nav-link">Profile </a></li>
-                        <li style="display: block"  class="nav-item" id="login" value="logout" name="login" ><a href="#" onclick="signOut();"   class="nav-link">Logout</a></li>
+                        <li style="display: block"  class="nav-item" id="login" value="logout" name="login" ><a href="logout" onclick="signOut();"   class="nav-link">Logout</a></li>
 
                         <% } %>
 

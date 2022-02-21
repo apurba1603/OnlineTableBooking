@@ -53,7 +53,7 @@ public class RestaurantAction implements SessionAware {
     private List<Restaurant> restaurantList = null;
     private String name, password;
     private SessionMap<String, Object> sessionMap;
-    private User user=null;
+    private User user = null;
 
     private String msg = "";
     private int ctr = 0;
@@ -83,7 +83,7 @@ public class RestaurantAction implements SessionAware {
         try {
             restaurantServices = new RestaurantServices();
             System.out.println("Restaurant id :" + restaurantId);
-            
+
             sessionMap.put("restaurantId", getRestaurantId());
             Restaurant restaurant = restaurantServices.fetchRestaurantDetails(getRestaurantId());
             System.out.println("restaurant=" + restaurant);
@@ -94,6 +94,12 @@ public class RestaurantAction implements SessionAware {
                 setApproxCost(restaurant.getApproxCost());
                 sessionMap.put("restaurant", restaurant);
                 System.out.println("Restaurant name :" + restaurantName);
+                User user = (User) sessionMap.get("User");
+                setFirstName(user.getFirstName());
+                System.out.println("user.getFirstName(): "+user.getFirstName());
+                setLastName(user.getLastName());
+                setEmail(user.getEmail());
+                setPhoneNumber(user.getPhoneNumber());
             }
 
         } catch (Exception e) {
@@ -102,15 +108,15 @@ public class RestaurantAction implements SessionAware {
 
         return "RESTAURANT";
     }
-    
+
     public String bookTableAndOrder() throws Exception {
 
         try {
             restaurantServices = new RestaurantServices();
-            setRestaurantId((int)sessionMap.get("restaurantId"));
-            user=(User)sessionMap.get("User");
+            setRestaurantId((int) sessionMap.get("restaurantId"));
+            user = (User) sessionMap.get("User");
             System.out.println("Restaurant id :" + restaurantId);
-            
+
             Restaurant restaurant = restaurantServices.fetchRestaurantDetails(getRestaurantId());
             System.out.println("restaurant=" + restaurant);
             if (restaurant != null) {
@@ -133,14 +139,14 @@ public class RestaurantAction implements SessionAware {
 
         return "RESTAURANT";
     }
-    
+
     public String menu() throws Exception {
         System.out.println("Menu print");
         setMenuServices(new MenuServices());
         try {
             setMenuList(new ArrayList<Menu>());
-            setMenuList(getMenuServices().showMenu((int)sessionMap.get("restaurantId")));
-            setRestaurantName(((Restaurant)sessionMap.get("restaurant")).getRestaurantName());
+            setMenuList(getMenuServices().showMenu((int) sessionMap.get("restaurantId")));
+            setRestaurantName(((Restaurant) sessionMap.get("restaurant")).getRestaurantName());
             if (!menuList.isEmpty()) {
                 setNoData(false);
                 System.out.println("setting nodata=false");
@@ -152,8 +158,6 @@ public class RestaurantAction implements SessionAware {
         }
         return "MENU";
     }
-
-    
 
     /**
      * @return the restaurantId

@@ -79,45 +79,38 @@ response.setDateHeader ("Expires", 0);
         </head>
         <body>
 
-            <div id="wrapper">
-
-                <!-- Navigation -->
-
-
-                <div id="page-wrapper" style="min-height: 231px;">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <h1 class="page-header">Reservations</h1>
+            <div id="page-wrapper">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h1 class="page-header">Tables</h1>
+                    </div>
+                    <!-- /.col-lg-12 -->
+                </div>
+                <!-- /.row -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                DataTables Advanced Tables
                             </div>
-                            <!-- /.col-lg-12 -->
-                        </div>
-                        <!-- /.row -->
-
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">
-                                        DataTables Advanced Tables
-                                    </div>
-                                    <!-- /.panel-heading -->
-
-                                    <div class="panel-body">
-                                        <div class="table-responsive">
-                                            <s:if test="noData==false">
-                                            <table class="table table-striped table-bordered table-hover" id="dataTables-example">
-                                                <thead>
-                                                    <tr>
-                                                        <th scope="col">User Id</th>
-                                                        <th scope="col">First Name</th>
-                                                        <th scope="col">Last Name</th>
-                                                        <th scope="col">Email</th>
-                                                        <th scope="col">Phone Number</th>
-                                                        <th scope="col">Status</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                <s:iterator value="userList">
+                            <!-- /.panel-heading -->
+                            <div class="panel-body">
+                                <div class="table-responsive">
+                                    <s:if test="noData==false">
+                                    <table class="table table-striped table-bordered table-hover"
+                                        id="dataTables-example">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">User Id</th>
+                                                <th scope="col">First Name</th>
+                                                <th scope="col">Last Name</th>
+                                                <th scope="col">Email</th>
+                                                <th scope="col">Phone Number</th>
+                                                <th scope="col">Status</th>
+                                            </tr>
+                                        </thead>
+                                            <s:iterator value="userList">
                                                     <tr class="odd gradeX">
                                                         <td><s:property value="userName" /></td>
                                                         <td><s:property value="firstName" /></td>
@@ -132,15 +125,16 @@ response.setDateHeader ("Expires", 0);
                                                             </s:else></td>
 
                                                     </tr>
-                                            </tbody>
-                                            </s:iterator>
-                                        </table>
-                                    </s:if>
-                                    <s:else>
-                                        <div style="color: red;">No Data Found.</div>
-                                    </s:else>
+
+                                    </s:iterator>
+                                    </table>
+                                </s:if>
+                                <s:else>
+                                    <div style="color: red;">No Data Found.</div>
+                                </s:else>
                                 </div>
                                 <!-- /.table-responsive -->
+
                             </div>
                             <!-- /.panel-body -->
                         </div>
@@ -152,6 +146,14 @@ response.setDateHeader ("Expires", 0);
 
 
 
+
+
+
+
+
+
+
+                <!-- /.row -->
             </div>
             <!-- /.container-fluid -->
         </div>

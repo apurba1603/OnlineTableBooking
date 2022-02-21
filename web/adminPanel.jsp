@@ -28,7 +28,7 @@ response.setDateHeader ("Expires", 0);
         <meta name="description" content="">
         <meta name="author" content="">
 
-        <title>Startmin - Bootstrap Admin Theme</title>
+        <title>Admin</title>
 
         <!-- Bootstrap Core CSS -->
         <link href="adminResources/css/bootstrap.min.css" rel="stylesheet">

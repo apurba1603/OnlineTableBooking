@@ -1,87 +1,107 @@
-<%@ page contentType="text/html; charset=UTF-8" %>
-<%@taglib prefix="s" uri="/struts-tags"%>
 <!DOCTYPE html>
 <html>
     <head>
-        <title>ExaDine Login</title>
-        <meta name="google-signin-client_id" content="712965236037-igrai07uhkr7505kguf3sper1ae6h5u1.apps.googleusercontent.com">
-        <!--<meta name="google-signin-scope" content="profile email">-->
-        <script src="https://apis.google.com/js/platform.js" async defer></script>
+        <title>Login</title>
         <link rel="stylesheet" type="text/css" href="css/login.css">
         <link href="https://fonts.googleapis.com/css2?family=Jost:wght@500&display=swap" rel="stylesheet">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css" />
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+        <style>
+            .signup{
+                position: relative;
+                width:94%;
+                height: 96%;
+            }
+            i {
+                position: absolute;
+                top: 179px;
+                right: 65px;
+                cursor: pointer;
+            }
+        </style>
     </head>
     <body>
-        <script src="https://apis.google.com/js/platform.js" async defer></script>
+        <div class="main">
+            <input type="checkbox" id="chk" aria-hidden="true">
+
+
+
+            <div class="signup">
+                <form action="login" method="post">
+                    <label for="chk" aria-hidden="true">Login</label>
+                    <input type="text" id="username" name="userName" placeholder="User Name" required="">
+                    <input type="password" id="password" name="password" placeholder="Password" required="">
+                    <i class="bi bi-eye-slash" id="togglePassword"></i>
+                    <button type="submit">Login</button>
+                </form>
+            </div>
+
+
+
+            <div class="login">
+                <form action="registerUser" method="post">
+                    <label for="chk" aria-hidden="true">Register User</label>
+
+                    <input type="text" id="username" name="userName" placeholder="User Name" required="">
+                    <input type="password" id="passwordSignUp" name="password" placeholder="Password" required="">
+                    <i  class="bi bi-eye-slash" id="togglePasswordSignUp" style="top: 179px"></i>
+                    <input type="text" id="confirm_pass" name="confirm_pass" placeholder="Confirm Password" onkeyup="validate_password()" required="">
+                    <button id="btnSignUp" type="submit">Sign Up</button>
+                    <span style="display: flex; justify-content: center;" id="wrong_pass_alert"></span>
+                </form>
+            </div>
+        </div>
         <script>
-            var clicked = false;//Global Variable
-            function ClickLogin()
-            {
-                clicked = true;
-            }
-            function onSignIn(googleUser) {
-                if (clicked) {
-                    var profile = googleUser.getBasicProfile();
-                    var id_token = googleUser.getAuthResponse().id_token;
-                    var email = profile.getEmail();
-                    var fullName = profile.getName();
-                    $.ajax({
+//            *** for sign in part ***
+            const togglePassword = document.querySelector("#togglePassword");
+            const password = document.querySelector("#password");
 
-                        url: 'registerGoogleUser',
-                        method: 'GET',
-                        data: {email: email, fullName: fullName},
-                        success: function (resultText) {
-//                        $('#result').html(resultText);
-                            window.location.href = "index";
+            togglePassword.addEventListener("click", function () {
+                // toggle the type attribute
+                const type = password.getAttribute("type") === "password" ? "text" : "password";
+                password.setAttribute("type", type);
 
-                        },
+                // toggle the icon
+                this.classList.toggle("bi-eye");
+            });
+//            *** x ***
 
-                        error: function (jqXHR, exception) {
-                            console.log('Error occured!!');
-                        }
-                    });
-                }
+//            *** for sign up part ***
+            const togglePasswordSignUp = document.querySelector("#togglePasswordSignUp");
+            const passwordSignUp = document.querySelector("#passwordSignUp");
 
-                function signOut() {
-                    alert("Sign out");
-                    var auth2 = gapi.auth2.getAuthInstance();
-                    auth2.signOut().then(function () {
-                        console.log('User signed out.');
-                    });
+            togglePasswordSignUp.addEventListener("click", function () {
+                // toggle the type attribute
+                const type = passwordSignUp.getAttribute("type") === "password" ? "text" : "password";
+                passwordSignUp.setAttribute("type", type);
+
+                // toggle the icon
+                this.classList.toggle("bi-eye");
+            });
+//            *** x ***
+
+            function validate_password() {
+                var pass = document.getElementById('passwordSignUp').value;
+                var confirm_pass = document.getElementById('confirm_pass').value;
+                if (pass != confirm_pass) {
+                    // prevent form submit
+                    document.getElementById("btnSignUp").disabled = true;
+                    document.getElementById('wrong_pass_alert').style.color = 'red';
+                    document.getElementById('wrong_pass_alert').innerHTML
+                            = 'Password did not match';
+                    document.getElementById('create').disabled = true;
+                    document.getElementById('create').style.opacity = (0.4);
+                    
+                } else {
+                    document.getElementById("btnSignUp").disabled = false;
+                    document.getElementById('wrong_pass_alert').style.color = 'green';
+                    document.getElementById('wrong_pass_alert').innerHTML =
+                            'Password Matched';
+                    document.getElementById('create').disabled = false;
+                    document.getElementById('create').style.opacity = (1);
                 }
             }
         </script>
-        <div class="main">
-
-            <input type="checkbox" id="chk" aria-hidden="true"> <div class="signup">
-
-                <form action="login" >
-                    <div class="g-signin2 social_signin" data-longtitle="true" onclick="ClickLogin()" data-onsuccess="onSignIn"></div>
-                    <a href="#" onclick="signOut();">Sign out</a>
-                    <s:if test="ctr>0">
-                        <span style="color: white;padding: 40px;font-weight: 700;font-size:15px;"><s:property value="msg" /></span>
-                    </s:if>
-                    <s:else>
-                        <span style="color: "><s:property value="msg" /></span>
-                    </s:else>
-                    <span style="color: green;">${sessionScope.ErrorMsg}</span>
-
-                    <label for="chk" aria-hidden="true">Login</label>
-                    <input autocomplete="off" type="text" name="userName" placeholder="UserName" required="">
-                    <input autocomplete="off" type="password" name="password" placeholder="Password" required="">
-                    <button type="submit">Login</button>
-                </form>
-            </div> <div class="login">
-                <form action="registerUser" method="post">
-                    <label for="chk" aria-hidden="true">Register User</label>
-                    <input autocomplete="off" type="text" name="userName" placeholder="User name" required="">
-                    <input autocomplete="off" type="text" name="email" placeholder="Email" required="">
-                    <input autocomplete="off" type="password" name="password" placeholder="Password" required=""><button type="submit">Sign up</button>
-                </form>
-
-            </div>
-        </div>
-
     </body>
 </html>
 

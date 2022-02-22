@@ -111,6 +111,12 @@ response.setDateHeader ("Expires", 0);
                                                 <input name="phoneNumber" type="text" class="form-control" value="<s:property value="phoneNumber"/>" placeholder="Phone Number">
                                         </div>
                                     </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="">Email</label>
+                                                <input name="email" type="text" class="form-control" value="<s:property value="email"></s:property>">
+                                            </div>
+                                        </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="">Date of Birth</label>
@@ -121,12 +127,6 @@ response.setDateHeader ("Expires", 0);
                                         <div class="form-group">
                                             <label for="">Address</label>
                                             <input autocomplete="off" name="address" type="text" class="form-control" value="<s:property value="address"/>" placeholder="Address" required>
-                                            </div>
-                                        </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="">Change Password</label>
-                                            <input name="password" type="password" class="form-control" value="<s:property value="password"/>" placeholder="Password" required>
                                             </div>
                                         </div>
                                     

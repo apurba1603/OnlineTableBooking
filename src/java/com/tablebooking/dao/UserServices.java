@@ -19,17 +19,15 @@ import java.util.List;
  */
 public class UserServices {
 
-    public int registerUser(String userName, String password, String firstName, String lastName,
-            String email, String phoneNumber) throws Exception {
+    public int registerUser(String userName, String password) throws Exception {
         int i = 0;
         Connection con = null;
         try {
             con = ConnectionManager.getConnection();
-            String sql = "INSERT INTO users (userName,password,email) VALUES (?,?,?)";
+            String sql = "INSERT INTO users (userName,password) VALUES (?,?)";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, userName);
             ps.setString(2, password);
-            ps.setString(3, email);
             System.out.println("SQL for insert=" + ps);
             i = ps.executeUpdate();
             return i;
@@ -192,26 +190,26 @@ public class UserServices {
         }
     }
 
-    public int updateUserDetails(String userName, String dob, String password, String firstName, String lastName,
+    public int updateUserDetails(String userName, String dob, String email, String firstName, String lastName,
             String address, String phoneNumber) throws SQLException, Exception {
 
         Connection con = ConnectionManager.getConnection();
         int i = 0;
         try {
             String sql = "UPDATE users SET\n"
-                    + "password = ?,\n"
                     + "firstName = ?,\n"
                     + "lastName = ?,\n"
                     + "dob = ?,\n"
                     + "address = ?,\n"
+                    + "email = ?, \n"
                     + "phoneNumber = ?\n"
                     + "WHERE userName = ?;";
             PreparedStatement ps = con.prepareStatement(sql);
-            ps.setString(1, password);
-            ps.setString(2, firstName);
-            ps.setString(3, lastName);
-            ps.setString(4, dob);
-            ps.setString(5, address);
+            ps.setString(1, firstName);
+            ps.setString(2, lastName);
+            ps.setString(3, dob);
+            ps.setString(4, address);
+            ps.setString(5, email);
             ps.setString(6, phoneNumber);
             ps.setString(7, userName);
             System.out.println("Select SQL = " + ps);

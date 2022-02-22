@@ -65,7 +65,7 @@ public class UserAction implements SessionAware {
         setUserServices(new UserServices());
 
         try {
-            setCtr(getUserServices().registerUser(getUserName(), getPassword(), getFirstName(), getLastName(), getEmail(), getPhoneNumber()));
+            setCtr(getUserServices().registerUser(getUserName(), getPassword()));
             if (getCtr() > 0) {
                 setMsg("Registration Successfull");
             } else {
@@ -113,7 +113,6 @@ public class UserAction implements SessionAware {
                 if (validUser.isUserRole()) {
                     reservationServices = new ReservationServices();
                     setUserName(validUser.getUserName());
-                    setPassword(validUser.getPassword());
                     setFirstName(validUser.getFirstName());
                     setReservationList(new ArrayList<Reservations>());
                     setReservationList(reservationServices.showAllReservations());
@@ -126,7 +125,6 @@ public class UserAction implements SessionAware {
                     System.out.println("line validUser.getFirstName() 100:" + validUser.getFirstName());
 
                     setUserName(validUser.getUserName());
-                    setPassword(validUser.getPassword());
 
                     if (validUser.getFirstName() == null) {
                         setUpdateMsg("Please Update Your Profile First.");
@@ -166,7 +164,6 @@ public class UserAction implements SessionAware {
             System.out.println("in try block user:" + user.isValidUser());
             if (user != null && user.isValidUser()) {
                 setUserName(user.getUserName());
-                setPassword(user.getPassword());
                 setFirstName(user.getFirstName());
                 setLastName(user.getLastName());
                 setEmail(user.getEmail());
@@ -187,6 +184,7 @@ public class UserAction implements SessionAware {
                 }
                 valid = "VALID";
             } else {
+                System.out.println("UserAction 190:INVALID" );
                 setMsg("Login failed");
                 valid = "INVALID";
             }
@@ -277,15 +275,14 @@ public class UserAction implements SessionAware {
         User user = (User) session.getAttribute("User");
         System.out.println("Update user method");
         try {
-            int i = dao.updateUserDetails(user.getUserName(), getDob(), getPassword(), getFirstName(), getLastName(), getAddress(), getPhoneNumber());
+            int i = dao.updateUserDetails(user.getUserName(), getDob(), getEmail(), getFirstName(), getLastName(), getAddress(), getPhoneNumber());
             if (i > 0) {
                 User myUser = new User();
                 myUser.setUserName(user.getUserName());
-                myUser.setPassword(getPassword());
+                myUser.setPassword(user.getPassword());
                 User validUser = UserServices.validateLoginCredentials(myUser);
                 getSessionMap().put("User", validUser);
                 setUserName(validUser.getUserName());
-                setPassword(validUser.getPassword());
                 setFirstName(validUser.getFirstName());
                 setLastName(validUser.getLastName());
                 setEmail(validUser.getEmail());
@@ -308,7 +305,6 @@ public class UserAction implements SessionAware {
         User user = (User) sessionMap.get("User");
         System.out.println("Update user form");
         setUserName(user.getUserName());
-        setPassword(user.getPassword());
         setFirstName(user.getFirstName());
         setLastName(user.getLastName());
         setAddress(user.getAddress());
